@@ -4,7 +4,7 @@ package CustomListView;
  * Created by f1 on 1/4/2016.
  */
 public class Model {
-    private int id;
+  /*  private int id;
     private String mpg;
     private String fuel;
     private String date;
@@ -57,17 +57,17 @@ public class Model {
 
     public void setMpg(String mpg) {
         this.mpg = mpg;
-    }
+    }*/
 
     public Model(){}
 
     public Model(String mpg, String fuel, String date, String distance, String price) {
         super();
-        this.mpg = mpg;
+/*        this.mpg = mpg;
         this.fuel = fuel;
         this.date = date;
         this.distance = distance;
-        this.price = price;
+        this.price = price;*/
     }
 
     private String name;

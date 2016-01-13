@@ -20,8 +20,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "MpgDB";
 
-    public MySQLiteHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public MySQLiteHelper(Context context, String dbName) {
+        super(context, dbName, null, DATABASE_VERSION);
     }
 
     @Override
@@ -58,6 +58,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String TABLE_BOOKS = "books";
 
     // Books Table Columns names
+   // private static final String KEY_TITLE = "title";
     private static final String KEY_ID = "id";
     private static final String KEY_MPG = "mpg";
     private static final String KEY_FUEL = "fuel";
@@ -74,6 +75,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // 2. create ContentValues to add key "column"/value
         ContentValues values = new ContentValues();
+       // values.put(KEY_TITLE,"date");
         values.put(KEY_MPG, data.getMpg()); // get mpg
         values.put(KEY_FUEL, data.getFuel()); // get fuel
         values.put(KEY_DATE, data.getDate()); // get date

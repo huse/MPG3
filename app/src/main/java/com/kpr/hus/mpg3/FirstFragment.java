@@ -20,17 +20,10 @@ import android.widget.TextView;
 import java.util.Calendar;
 import java.util.List;
 
+//dESIGNED BY hOSEIN kAJEPOR
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FirstFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FirstFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FirstFragment extends Fragment {
-    //dESIGNED BY hOSEIN kAJEPOR
+
     double truncateDouble(double number, int numDigits) {
         double result = number;
         String arg = "" + number;
@@ -125,7 +118,7 @@ public class FirstFragment extends Fragment {
         et6 = (EditText) v.findViewById(R.id.editText6);
         tv1 = (TextView) v.findViewById(R.id.textView4);
         tv2 = (TextView) v.findViewById(R.id.textView6);
-        db = new MySQLiteHelper(getActivity().getBaseContext());
+        db = new MySQLiteHelper(getActivity().getBaseContext(),"first");
         listView = (ListView)v.findViewById(R.id.listView);
 
         updateingListView();

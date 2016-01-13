@@ -24,6 +24,7 @@ public class ModelArrayAdapter extends ArrayAdapter<Model>
     private LayoutInflater inflator;
     private View.OnTouchListener listener;
 
+
     public ModelArrayAdapter(Activity context, ArrayList<Model> list,View.OnTouchListener _listener) {
         super(context, R.layout.list_row, list);
         this.listener = _listener;
@@ -42,7 +43,7 @@ public class ModelArrayAdapter extends ArrayAdapter<Model>
             return null;
         Model m = allModelItemsArray.get(position);
         final ViewHolder viewHolder = new ViewHolder();
-        ViewHolder Holder = null;
+        ViewHolder holder = null;
         if (convertView == null) {
 
             view = inflator.inflate(R.layout.list_row, null);
@@ -55,18 +56,19 @@ public class ModelArrayAdapter extends ArrayAdapter<Model>
             viewHolder.checkbox.setTag(m);
             viewHolder.position = position;
 
-            Holder = viewHolder;
+            holder = viewHolder;
         } else {
             view = convertView;
-            Holder = ((ViewHolder) view.getTag());
+            holder = ((ViewHolder) view.getTag());
         }
 
         if(this.listener != null)
             view.setOnTouchListener(this.listener);
 
-        Holder.model = m;
-        Holder.position = position;
-        Holder.text.setText(m.getName());
+        holder.model = m;
+        holder.position = position;
+        // in this line I can modify the output as several textView.
+        holder.text.setText(m.getName());
         return view;
     }
 }

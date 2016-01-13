@@ -16,16 +16,16 @@ import java.util.List;
 public class MySimpleArrayAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final String[] values;
-    List vv;
+    List list;
 
-    public MySimpleArrayAdapter(Context context, String[] values, List vv) {
+    public MySimpleArrayAdapter(Context context, String[] values, List list) {
 
 
 
         super(context, -1, values);
         this.context = context;
         this.values = values;
-        this.vv=vv;
+        this.list =list;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class MySimpleArrayAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.row, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.textView11);
-        textView.setText(vv.get(position).toString());
+        textView.setText(list.get(position).toString());
 
 
 

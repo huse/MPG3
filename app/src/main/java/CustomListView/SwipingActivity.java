@@ -2,11 +2,9 @@ package CustomListView;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.kpr.hus.mpg3.R;
@@ -23,7 +21,7 @@ public class SwipingActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView lv = (ListView)findViewById(R.id.listView);
+      /*  ListView lv = (ListView)findViewById(R.id.listView);
 
         gestureListener = new View.OnTouchListener() {
             private int padding = 0;
@@ -71,7 +69,7 @@ public class SwipingActivity extends Activity {
                 }
                 return true;
             }
-        };
+        };*/
 
        // ModelArrayAdapter adapter = new ModelArrayAdapter(this, getData(),gestureListener);
        // lv.setAdapter(adapter);
@@ -105,6 +103,7 @@ public class SwipingActivity extends Activity {
             color = 0xFFFFFFFF;
             running = false;
         }
+
         public int getColor() {
             return color;
         }

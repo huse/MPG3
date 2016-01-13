@@ -3,8 +3,10 @@ package com.kpr.hus.mpg3;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import java.util.List;
 
 import CustomListView.Model;
 import CustomListView.ModelArrayAdapter;
+import CustomListView.SwipingActivity;
 import CustomListView.SwipingActivity.ViewHolder;
 
 /**
@@ -53,8 +56,11 @@ public class ThirdFragment extends Fragment {
     Button bt5, bt6;
     EditText et1, et2, et5, et6;
     TextView tv1, tv2;
+
     String a, b, c, d;
     View.OnTouchListener gestureListener;
+    private ViewHolder viewHolder;
+    boolean bCycling = false;
 
     public void sets(String a, String b, String c, String d) {
         this.a = a;
@@ -101,7 +107,7 @@ public class ThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout containing a title and body text.
-        ViewGroup rootView = (ViewGroup) inflater
+        final ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_third, container, false);
         Support.colorBackChange(rootView,0,255,117,50,155,255,117,50);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -111,8 +117,9 @@ public class ThirdFragment extends Fragment {
         et6 = (EditText) rootView.findViewById(R.id.editText6);
         tv1 = (TextView) rootView.findViewById(R.id.textView8);
         tv2 = (TextView) rootView.findViewById(R.id.textView10);
-        db3 = new MySQLiteHelper(getActivity().getBaseContext());
+        db3 = new MySQLiteHelper(getActivity().getBaseContext(),"third");
         listView = (ListView)rootView.findViewById(R.id.listView3);
+       // imageView= (ImageView)rootView.findViewById(R.id.icon);
         //  tv1.setTextSize(20);
         // tv2.setTextSize(20)
 
@@ -152,12 +159,12 @@ public class ThirdFragment extends Fragment {
 
                 Calendar c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH);
+                int month = c.get(Calendar.MONTH)+1;
                 int year = c.get(Calendar.YEAR);
 
                 // textView2.setText(month+"/"+day+"/"+year );
                 // db.getAllBooks();
-                db3.addBook(new Data(et5.getText().toString(), et6.getText().toString(), month + "/" + day + "/" + year, et6.getText().toString(), "price"));
+                db3.addBook(new Data( month + "/" + day + "/" + year, et5.getText().toString(), et6.getText().toString(), tv1.getText().toString(), tv2.getText().toString()));
 
 
                 updateingListView();
@@ -178,29 +185,84 @@ public class ThirdFragment extends Fragment {
 
 
         });
+/*        viewHolder = ((ViewHolder) rootView.getTag());
+       // viewHolder.icon.setImageResource(R.drawable.recycle_512);
+        viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db3.deleteBook(list.get(0));
+            }
+
+
+        });*/
         //Toast.makeText(this, "Calculation Distance Imperial", Toast.LENGTH_SHORT).show();
        // startActivity(new Intent(getActivity().getBaseContext(), SwipingActivity.class));
-        listView.setLongClickable(true);
+       listView.setLongClickable(true);
         registerForContextMenu(listView);
-       listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-           private ViewHolder viewHolder;
+           private SwipingActivity.ViewHolder viewHolder;
+
            @Override
-           public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                          int pos, long id) {
-               arg1.setBackgroundColor(0xFF305556);
+           public void onItemClick(AdapterView<?> arg0, View arg1,
+                                   int pos, long id) {
+               // cyclingButt( arg1,  viewHolder);
                viewHolder = ((ViewHolder) arg1.getTag());
-               viewHolder.icon.setImageResource(R.drawable.recycle_512);
+               int color = Color.TRANSPARENT;
+               Drawable background = arg1.getBackground();
+               if (background instanceof ColorDrawable)
+                   color = ((ColorDrawable) background).getColor();
+               arg1.setBackgroundColor(0xFFFF5556);
+               if (color != 0xFFFF5556) {
+                   arg1.setBackgroundColor(0xFFFF5556);
+                   viewHolder.icon.setImageResource(R.drawable.recycle_512);
+                   viewHolder.icon.setVisibility(View.VISIBLE);
 
-               Log.v("long clicked", "pos: " + pos);
-               Log.d("HHHHHHHHHH listsize", list.size() + "");
+               } else {
 
-               return false;
+                   arg1.setBackgroundColor(listView.getSolidColor());
+                   viewHolder.icon.setVisibility(View.GONE);
+               }
+               final int poss = pos;
+               viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       db3.deleteBook(list.get(poss));
+
+                       updateingListView();
+                   }
+
+
+               });
+
            }
 
        });
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-       /* gestureListener = new View.OnTouchListener() {
+            private SwipingActivity.ViewHolder viewHolder;
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int pos, long id) {
+                // cyclingButt( arg1,  viewHolder);
+                viewHolder = ((ViewHolder) arg1.getTag());
+                int color = Color.TRANSPARENT;
+                Drawable background = arg1.getBackground();
+                if (background instanceof ColorDrawable)
+                    color = ((ColorDrawable) background).getColor();
+                if (color == 0xFFFF5556) {
+                    arg1.setBackgroundColor(Color.argb(155, 255, 117, 50));
+                    viewHolder.icon.setVisibility(View.GONE);
+                }
+                final int poss = pos;
+
+
+            }
+
+        });
+*/
+        /*gestureListener = new View.OnTouchListener() {
             private int padding = 0;
             private int initialx = 0;
             private int currentx = 0;
@@ -212,11 +274,17 @@ public class ThirdFragment extends Fragment {
                     initialx = (int) event.getX();
                     currentx = (int) event.getX();
                     viewHolder = ((ViewHolder) v.getTag());
+                    Log.v("ACTION_DOWN", "currentx: " + currentx);
+                    Log.v("ACTION_DOWN", "PADDING: " + padding);
+                    Log.v("ACTION_DOWN", "initialx: " + initialx);
                 }
                 if ( event.getAction() == MotionEvent.ACTION_MOVE)
                 {
                     currentx = (int) event.getX();
                     padding = currentx - initialx;
+                    Log.v("ACTION_MOVE", "currentx: " + currentx);
+                    Log.v("ACTION_MOVE", "PADDING: " + padding);
+                    Log.v("ACTION_MOVE", "initialx: " + initialx);
                 }
 
                 if ( event.getAction() == MotionEvent.ACTION_UP ||
@@ -225,31 +293,65 @@ public class ThirdFragment extends Fragment {
                     padding = 0;
                     initialx = 0;
                     currentx = 0;
+                    Log.v("ACTION_UP", "currentx: " + currentx);
+                    Log.v("ACTION_UP", "PADDING: " + padding);
+                    Log.v("ACTION_UP", "initialx: " + initialx);
                 }
 
                 if(viewHolder != null)
-                {
-                    if(padding == 0)
+                {int color = Color.TRANSPARENT;
+                    Drawable background = v.getBackground();
+                    if (background instanceof ColorDrawable)
+                        color = ((ColorDrawable) background).getColor();
+                    if(padding == 0 && color!=0xFFFF5556)
                     {
-                        v.setBackgroundColor(0xFF305556 );
+
+                        v.setBackgroundColor(0xFFFF5556 );
                         viewHolder.icon.setImageResource(R.drawable.recycle_512);
+                        viewHolder.icon.setVisibility(View.VISIBLE);
+*//*
+                        viewHolder.icon.setVisibility(View.INVISIBLE);
+
+                        viewHolder.icon.setVisibility(View.GONE);*//*
                         if(viewHolder.running)
                             v.setBackgroundColor(0xFF058805);
+
                     }
-                    if(padding > 15)
+                    if(padding == 0 && color==0xFFFF5556)
                     {
+
+                        v.setBackgroundColor(Color.argb(155, 255, 117, 50));
+
+                       // viewHolder.icon.setVisibility(View.VISIBLE);
+
+                       // viewHolder.icon.setVisibility(View.INVISIBLE);
+
+                        viewHolder.icon.setVisibility(View.GONE);
+                        if(viewHolder.running)
+                            v.setBackgroundColor(0xFF058805);
+
+                    }
+                    if(padding > 15) {
                         viewHolder.running = true;
                         v.setBackgroundColor(0xFF00FF00 );
-                        viewHolder.icon.setImageResource(R.drawable.clock_running);
+                      //  viewHolder.icon.setImageResource(R.drawable.clock_running);
                     }
-                    if(padding < -15)
-                    {
+                    if(padding < -15) {
                         viewHolder.running = false;
                         v.setBackgroundColor(0xFFFF0000);
-                        viewHolder.icon.setImageResource(R.drawable.bullet_green);
+                       // viewHolder.icon.setImageResource(R.drawable.bullet_green);
                     }
                     v.setPadding(padding, 0,0, 0);
                 }
+                viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        db3.deleteBook(list.get(0));
+                        updateingListView();
+                    }
+
+
+                });
                 return true;
             }
         };*/
@@ -257,6 +359,28 @@ public class ThirdFragment extends Fragment {
 
         return rootView;
     }
+/*    public boolean cyclingButt(View arg1,ViewHolder viewHolder){
+        int color = Color.TRANSPARENT;
+        Drawable background = arg1.getBackground();
+        if (background instanceof ColorDrawable)
+            color = ((ColorDrawable) background).getColor();
+        if(color==Color.argb(155, 255, 117, 50)) {
+            arg1.setBackgroundColor(0xAA305500);
+            viewHolder = ((ViewHolder) arg1.getTag());
+            viewHolder.icon.setImageResource(R.drawable.recycle_512);
+
+            bCycling=false;
+        }
+        else{
+            arg1.setBackgroundColor(Color.argb(155, 255, 117, 50));
+
+            viewHolder = ((ViewHolder) arg1.getTag());
+            viewHolder.icon.setImageResource(R.drawable.bullet_go);
+            bCycling=true;
+        }
+        return bCycling;
+
+    }*/
     public ArrayList<Model> getData()
     {
         list = db3.getAllBooks();
@@ -296,15 +420,13 @@ public class ThirdFragment extends Fragment {
 
     public void updateingListView() {
 
-        //  Log.d("HHHHHHHHHH listsize",list.size()+"");
-
         adapter = new ModelArrayAdapter(getActivity(), getData(),gestureListener);
         listView.setAdapter(adapter);
        // adapter=new MySimpleArrayAdapter(getActivity().getBaseContext(), rr, list);
 
 
 
-        // next thing you have to do is check if your adapter has changed
+        // check if the adapter has changed
         adapter.notifyDataSetChanged();
     }
 }
