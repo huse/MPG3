@@ -90,7 +90,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Data getBook(int id){
+    public Data getData(int id){
 
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
@@ -112,14 +112,16 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // 4. build data object
         Data data = new Data();
-        data.setId(Integer.parseInt(cursor.getString(0)));
-        data.setMpg(cursor.getString(1));
-        data.setFuel(cursor.getString(2));
-        data.setDate(cursor.getString(3));
-        data.setDistance(cursor.getString(4));
-        data.setPrice(cursor.getString(5));
+        if(cursor != null && cursor.moveToFirst()) {
+            data.setId(Integer.parseInt(cursor.getString(0)));
 
-        Log.d("getBook("+id+")", data.toString());
+            data.setMpg(cursor.getString(1));
+            data.setFuel(cursor.getString(2));
+            data.setDate(cursor.getString(3));
+            data.setDistance(cursor.getString(4));
+            data.setPrice(cursor.getString(5));
+        }
+        Log.d("getData(" + id + ")", data.toString());
 
         // 5. return data
         return data;

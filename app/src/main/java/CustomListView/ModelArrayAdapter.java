@@ -68,6 +68,7 @@ public class ModelArrayAdapter extends ArrayAdapter<Model>
         holder.model = m;
         holder.position = position;
         // in this line I can modify the output as several textView.
+
         holder.text.setText(m.getName());
         return view;
     }

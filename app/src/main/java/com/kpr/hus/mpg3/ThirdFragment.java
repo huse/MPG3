@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,7 +165,7 @@ public class ThirdFragment extends Fragment {
 
                 // textView2.setText(month+"/"+day+"/"+year );
                 // db.getAllBooks();
-                db3.addBook(new Data( month + "/" + day + "/" + year, et5.getText().toString(), et6.getText().toString(), tv1.getText().toString(), tv2.getText().toString()));
+                db3.addBook(new Data(month + "/" + day + "/" + year, et5.getText().toString(), et6.getText().toString(), tv1.getText().toString(), tv2.getText().toString()));
 
 
                 updateingListView();
@@ -217,6 +218,10 @@ public class ThirdFragment extends Fragment {
                    arg1.setBackgroundColor(0xFFFF5556);
                    viewHolder.icon.setImageResource(R.drawable.recycle_512);
                    viewHolder.icon.setVisibility(View.VISIBLE);
+                  // Log.d("HHHHHHHHHHHHHHHHHHHHHH", " DSJDFJASKJDF");
+                   Log.d("NNNNNNNNNNNNNNNNNNNN", db3.getData(pos).getId()+"");
+                   Log.d("AAAAAAAAAAAAAAAAAAAA", db3.getData(pos).getDate()+"");
+
 
                } else {
 
@@ -228,7 +233,7 @@ public class ThirdFragment extends Fragment {
                    @Override
                    public void onClick(View v) {
                        db3.deleteBook(list.get(poss));
-
+                      Log.d("vbbvvvvvvvvv", db3.getData(poss).getDate());
                        updateingListView();
                    }
 
