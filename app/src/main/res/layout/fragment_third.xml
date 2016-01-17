@@ -230,7 +230,6 @@
                     android:id="@+id/linearLayout8">
 
 
-
                     <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -244,6 +243,75 @@
                     </ScrollView>
 
 
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <TextView
+                            android:text="ID"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:id="@+id/label1"
+                            android:paddingTop="10dp"
+                            android:textStyle="bold"
+                            android:layout_alignParentLeft="true"
+                            >
+                        </TextView>
+                        <TextView
+                            android:text="Date"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:textStyle="bold"
+                            android:id="@+id/label2"
+                            android:paddingTop="10dp"
+
+                            android:layout_toRightOf="@+id/label1">
+                        </TextView>
+                        <TextView
+                            android:text="MPG"
+                            android:layout_width="90dp"
+                            android:layout_height="match_parent"
+                            android:textStyle="bold"
+                            android:id="@+id/label3"
+                            android:paddingTop="10dp"
+                            android:layout_toRightOf="@+id/label2">
+                        </TextView>
+                        <TextView
+                            android:text="Gallon"
+                            android:layout_width="90dp"
+                            android:layout_height="match_parent"
+                            android:paddingTop="10dp"
+                            android:id="@+id/label4"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@+id/label3" >
+                        </TextView>
+                        <TextView
+                            android:text="Mile"
+                            android:layout_width="90dp"
+                            android:layout_height="match_parent"
+                            android:paddingTop="10dp"
+                            android:id="@+id/label5"
+                            android:textStyle="bold"
+
+                            android:layout_toRightOf="@+id/label4"
+                            >
+                        </TextView>
+                        <TextView
+                            android:text="KM"
+                            android:layout_width="90dp"
+                            android:layout_height="match_parent"
+                            android:paddingTop="10dp"
+                            android:id="@+id/label6"
+                            android:textStyle="bold"
+                            android:layout_toRightOf="@+id/label5"
+                            >
+                        </TextView>
+
+
+
+
+                    </LinearLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"

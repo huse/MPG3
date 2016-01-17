@@ -53,11 +53,11 @@ public class SixthFragment extends Fragment {
                 .inflate(R.layout.fragment_sixth, container, false);
         Support.colorBackChange(rootView,0,50, 150, 100,155,50, 150, 100);
 /*
-        tv1 = (TextView) rootView.findViewById(R.id.textView3);
-        tv2 = (TextView) rootView.findViewById(R.id.textView4);
+        tvMPG = (TextView) rootView.findViewById(R.id.textView3);
+        tvKM100 = (TextView) rootView.findViewById(R.id.textView4);
         tv3 = (TextView) rootView.findViewById(R.id.textView6);
-        tv1.setText("All car manufacture companies release their products fuel efficiency in scale of MPG or Liter per 100Km, but those numbers are actually just an estimates or the ideal numbers that could be achieved only under some certain conditions such as good quality fuel, brand new tires without any attrition and erosion, flat road, and without any passengers, but not all of us have all those perfect parameters ! so it would be nice to have a better understanding  of our automobile fuel consuming to see if ours is the green one or not.");
-        tv2.setText(" 1- Full the gas tank at the gas station. &#xA;\n" +
+        tvMPG.setText("All car manufacture companies release their products fuel efficiency in scale of MPG or Liter per 100Km, but those numbers are actually just an estimates or the ideal numbers that could be achieved only under some certain conditions such as good quality fuel, brand new tires without any attrition and erosion, flat road, and without any passengers, but not all of us have all those perfect parameters ! so it would be nice to have a better understanding  of our automobile fuel consuming to see if ours is the green one or not.");
+        tvKM100.setText(" 1- Full the gas tank at the gas station. &#xA;\n" +
                 "                          2- Reset the odometer(trip) number. &#xA;\n" +
                 "                          3- Next time at the gas station note down the odometer number line. &#xD;\n" +
                 "                          4- Full the gas tank and note down the amount of Gallon or Litter. &#xD;\n" +

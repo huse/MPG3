@@ -121,8 +121,8 @@ public class ThirdFragment extends Fragment {
         db3 = new MySQLiteHelper(getActivity().getBaseContext(),"third");
         listView = (ListView)rootView.findViewById(R.id.listView3);
        // imageView= (ImageView)rootView.findViewById(R.id.icon);
-        //  tv1.setTextSize(20);
-        // tv2.setTextSize(20)
+        //  tvMPG.setTextSize(20);
+        // tvKM100.setTextSize(20)
 
 
         bt5.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +164,7 @@ public class ThirdFragment extends Fragment {
                 int year = c.get(Calendar.YEAR);
 
                 // textView2.setText(month+"/"+day+"/"+year );
-                // db.getAllBooks();
+                // db1.getAllBooks();
                 db3.addBook(new Data(month + "/" + day + "/" + year, et5.getText().toString(), et6.getText().toString(), tv1.getText().toString(), tv2.getText().toString()));
 
 
@@ -186,55 +186,52 @@ public class ThirdFragment extends Fragment {
 
 
         });
-/*        viewHolder = ((ViewHolder) rootView.getTag());
-       // viewHolder.icon.setImageResource(R.drawable.recycle_512);
-        viewHolder.icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                db3.deleteBook(list.get(0));
-            }
 
 
-        });*/
-        //Toast.makeText(this, "Calculation Distance Imperial", Toast.LENGTH_SHORT).show();
-       // startActivity(new Intent(getActivity().getBaseContext(), SwipingActivity.class));
-       listView.setLongClickable(true);
-        registerForContextMenu(listView);
        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-           private SwipingActivity.ViewHolder viewHolder;
+
 
            @Override
            public void onItemClick(AdapterView<?> arg0, View arg1,
                                    int pos, long id) {
-               // cyclingButt( arg1,  viewHolder);
+
+               final SwipingActivity.ViewHolder viewHolder;;
+
                viewHolder = ((ViewHolder) arg1.getTag());
+               //Using background color
                int color = Color.TRANSPARENT;
                Drawable background = arg1.getBackground();
                if (background instanceof ColorDrawable)
-                   color = ((ColorDrawable) background).getColor();
-               arg1.setBackgroundColor(0xFFFF5556);
-               if (color != 0xFFFF5556) {
+               {color = ((ColorDrawable) background).getColor();}
+               final View substitute;
+               substitute= arg1;
+
+               if (color != 0xFFFF5556 ) {
                    arg1.setBackgroundColor(0xFFFF5556);
                    viewHolder.icon.setImageResource(R.drawable.recycle_512);
                    viewHolder.icon.setVisibility(View.VISIBLE);
-                  // Log.d("HHHHHHHHHHHHHHHHHHHHHH", " DSJDFJASKJDF");
-                   Log.d("NNNNNNNNNNNNNNNNNNNN", db3.getData(pos).getId()+"");
-                   Log.d("AAAAAAAAAAAAAAAAAAAA", db3.getData(pos).getDate()+"");
-
-
+                   Log.d("Selected", viewHolder.position + "");
                } else {
-
                    arg1.setBackgroundColor(listView.getSolidColor());
                    viewHolder.icon.setVisibility(View.GONE);
+                   Log.d("Deselected", viewHolder.position + "");
                }
                final int poss = pos;
                viewHolder.icon.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
+                       substitute.setBackgroundColor(0xFFB1B1B1);
+                       viewHolder.icon.setVisibility(View.GONE);
                        db3.deleteBook(list.get(poss));
-                      Log.d("vbbvvvvvvvvv", db3.getData(poss).getDate());
-                       updateingListView();
+                       viewHolder.text.setText("");
+                       viewHolder.text2.setText("Deleted");
+                       viewHolder.text3.setText("");
+                       viewHolder.text4.setText("");
+                       viewHolder.text5.setText("");
+                       viewHolder.text6.setText("");
+                       Log.d("List", list.get(poss) + "");
+                       Log.d("positon", poss + "");
                    }
 
 
@@ -390,12 +387,7 @@ public class ThirdFragment extends Fragment {
     {
         list = db3.getAllBooks();
 
-        String[] rr = new String[list.size()];
-        //initiate array
-        for(int i=0;i<list.size();i++){
-            rr[i]= i+"";
-        }
-        ArrayList<Model> models = new ArrayList<Model>();
+        ArrayList<Model> models = new ArrayList();
 
         for(int a=0;a<list.size();a++)
         {

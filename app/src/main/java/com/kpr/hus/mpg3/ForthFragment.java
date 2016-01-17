@@ -98,8 +98,8 @@ public class ForthFragment extends Fragment {
         et6 = (EditText) rootView.findViewById(R.id.editText6);
         tv1 = (TextView) rootView.findViewById(R.id.textView8);
         tv2 = (TextView) rootView.findViewById(R.id.textView10);
-        //  tv1.setTextSize(20);
-        // tv2.setTextSize(20)
+        //  tvMPG.setTextSize(20);
+        // tvKM100.setTextSize(20)
 
 
         bt5.setOnClickListener(new View.OnClickListener() {

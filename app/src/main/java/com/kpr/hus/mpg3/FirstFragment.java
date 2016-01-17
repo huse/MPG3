@@ -3,22 +3,28 @@ package com.kpr.hus.mpg3;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import CustomListView.Model;
+import CustomListView.ModelArrayAdapter;
+import CustomListView.SwipingActivity;
 
 //dESIGNED BY hOSEIN kAJEPOR
 
@@ -44,13 +50,15 @@ public class FirstFragment extends Fragment {
         startActivity(intent);
     }
     List<Data> list;
-    MySQLiteHelper db;
+    MySQLiteHelper db1;
     ListView listView;
-    ArrayAdapter<String> adapter;
+    ModelArrayAdapter adapter;
+    View.OnTouchListener gestureListener;
     Button bt, bt2,bt7;
-    EditText et1, et6, et3, et4;
-    TextView tv1, tv2;
+    EditText et1, etPrice, etMile, etGallon;
+    TextView tvMPG, tvKM100;
     String a, b, c, d;
+
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
     enum Direction {LEFT, RIGHT;}
@@ -112,54 +120,59 @@ public class FirstFragment extends Fragment {
         Support.colorBackChange(v,0,55,255,255,155,55,255,255);
         bt = (Button) v.findViewById(R.id.button3);
         bt2 = (Button) v.findViewById(R.id.button4);
-        bt7 = (Button) v.findViewById(R.id.button7);
-        et3 = (EditText) v.findViewById(R.id.editText);
-        et4 = (EditText) v.findViewById(R.id.editText2);
-        et6 = (EditText) v.findViewById(R.id.editText6);
-        tv1 = (TextView) v.findViewById(R.id.textView4);
-        tv2 = (TextView) v.findViewById(R.id.textView6);
-        db = new MySQLiteHelper(getActivity().getBaseContext(),"first");
+
+        etMile = (EditText) v.findViewById(R.id.editText);
+        etGallon = (EditText) v.findViewById(R.id.editText2);
+        etPrice = (EditText) v.findViewById(R.id.editText6);
+        tvMPG = (TextView) v.findViewById(R.id.textView4);
+        tvKM100 = (TextView) v.findViewById(R.id.textView6);
+        db1 = new MySQLiteHelper(getActivity().getBaseContext(),"first");
         listView = (ListView)v.findViewById(R.id.listView);
 
         updateingListView();
 
-       bt.setOnTouchListener(new View.OnTouchListener() {
+       bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Support.colorChange(v, "BLUE", "RED");
+                try {
+                    Double dd1 = Double.parseDouble(etMile.getText().toString());
+                    Double dd2 = Double.parseDouble(etGallon.getText().toString());
+                    Double dd;
+                    dd = dd1 / dd2;
+                    Double ff = truncateDouble(dd, 2);
+                    String ss;
+                    ss = ff.toString();
+                    tvMPG.setText(ss);
 
+                    Double dk1 = dd1 * 1.609344;
+                    Double dk2 = dd2 * 3.785411784;
+                    Double dkk = (100.0 * dk2) / dk1;
+                    Double ff2 = truncateDouble(dkk, 2);
+                    String sk = ff2.toString();
+                    tvKM100.setText(sk);
+                    sets(etMile.getText().toString(), etGallon.getText().toString(),
+                            ss, sk);
+                    InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    mgr.hideSoftInputFromWindow(etGallon.getWindowToken(), 0);
+                    mgr.hideSoftInputFromWindow(etMile.getWindowToken(), 0);
 
-           @Override
-           public boolean onTouch(View v, MotionEvent event) {
-               Support.colorChange(v, "BLUE", "RED");
-               try {
-                   Double dd1 = Double.parseDouble(et3.getText().toString());
-                   Double dd2 = Double.parseDouble(et4.getText().toString());
-                   Double dd;
-                   dd = dd1 / dd2;
-                   Double ff = truncateDouble(dd, 2);
-                   String ss;
-                   ss = ff.toString();
-                   tv1.setText(ss + "   Mile per Gallon");
+                } catch (Exception e) {
+                    tvKM100.setText("invalid");
+                    tvMPG.setText("invalid");
 
-                   Double dk1 = dd1 * 1.609344;
-                   Double dk2 = dd2 * 3.785411784;
-                   Double dkk = (100.0 * dk2) / dk1;
-                   Double ff2 = truncateDouble(dkk, 2);
-                   String sk = ff2.toString();
-                   tv2.setText(sk + "   Liter per 100 KM");
-                   sets(et3.getText().toString(), et4.getText().toString(),
-                           ss, sk);
-                   InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                   mgr.hideSoftInputFromWindow(et4.getWindowToken(), 0);
-                   mgr.hideSoftInputFromWindow(et3.getWindowToken(), 0);
+                }
+                Calendar c = Calendar.getInstance();
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH) + 1;
+                int year = c.get(Calendar.YEAR);
 
-               } catch (Exception e) {
-                   tv2.setText("invalid");
-                   tv1.setText("invalid");
+                db1.addBook(new Data(month + "/" + day + "/" + year, etMile.getText().toString(), etGallon.getText().toString(), etPrice.getText().toString(), tvMPG.getText().toString()));
 
-               }
+                updateingListView();
 
-               return false;
-           }
-       });
+            }
+        });
         bt2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,150 +186,97 @@ public class FirstFragment extends Fragment {
 
         });
 
-        bt7.setOnClickListener(new View.OnClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
 
             @Override
-            public void onClick(View v) {
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int pos, long id) {
 
-                Calendar c = Calendar.getInstance();
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH);
-                int year = c.get(Calendar.YEAR);
+                final SwipingActivity.ViewHolder viewHolder;
+                ;
 
-                // textView2.setText(month+"/"+day+"/"+year );
-                // db.getAllBooks();
-                db.addBook(new Data(et3.getText().toString(), et4.getText().toString(), month + "/" + day + "/" + year, et6.getText().toString(), "price"));
+                viewHolder = ((SwipingActivity.ViewHolder) arg1.getTag());
+                //Using background color
+                int color = Color.TRANSPARENT;
+                Drawable background = arg1.getBackground();
+                if (background instanceof ColorDrawable) {
+                    color = ((ColorDrawable) background).getColor();
+                }
+                final View substitute;
+                substitute = arg1;
+
+                if (color != 0xFFFF5556) {
+                    arg1.setBackgroundColor(0xFFFF5556);
+                    viewHolder.icon.setImageResource(R.drawable.recycle_512);
+                    viewHolder.icon.setVisibility(View.VISIBLE);
+                    Log.d("Selected", viewHolder.position + "");
+                } else {
+                    arg1.setBackgroundColor(listView.getSolidColor());
+                    viewHolder.icon.setVisibility(View.GONE);
+                    Log.d("Deselected", viewHolder.position + "");
+                }
+                final int poss = pos;
+                viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        substitute.setBackgroundColor(0xFFB1B1B1);
+                        viewHolder.icon.setVisibility(View.GONE);
+                        db1.deleteBook(list.get(poss));
+                        viewHolder.text.setText("");
+                        viewHolder.text2.setText("Deleted");
+                        viewHolder.text3.setText("");
+                        viewHolder.text4.setText("");
+                        viewHolder.text5.setText("");
+                        viewHolder.text6.setText("");
+                        Log.d("List", list.get(poss) + "");
+                        Log.d("positon", poss + "");
+                    }
 
 
-                updateingListView();
+                });
+
             }
+
         });
-        listView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                listView.setBackgroundColor(0xFF00FFFF);
-                Log.d("HHHHHHHHHH", "position" + "");
-
-             return true;
-            }
-        });
-        listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView parentView, View childView, int position, long id) {
-                listView.setBackgroundColor(0xFF00FFFF);
-                Log.d("HHHHHHHHHH", position + "");
-                //The above text variable has the text value of selected item
-                // position will reflect the index of selected item
-            }
-
-            public void onNothingSelected(AdapterView parentView) {
-            }
-        });
-/*        listView.setOnTouchListener(new View.OnTouchListener() {
-            private int padding = 0;
-            private int initialx = 0;
-            private int currentx = 0;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
-                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    padding = 0;
-                    initialx = (int) event.getX();
-                    currentx = (int) event.getX();
-                    currentx = (int) event.getX();
-                    padding = currentx - initialx;
-
-                }
-
-                if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    padding = 0;
-                    initialx = 0;
-                    currentx = 0;
-                }
-
-                ////////////
-                if (padding == 0) {
-                    v.setBackgroundColor(0xFF00FFFF);
-                    // v.setBackgroundColor(0xFFFF0000 );
-                    Log.d("HHHHHHHHHH0000", MySimpleArrayAdapter.posoo + "");
-                    FunctionDeleteRowWhenSlidingLeft(MySimpleArrayAdapter.posoo);
-                }
-                if (padding > 75) {
-
-                    v.setBackgroundColor(0xFF00FF00);
-                    Log.d("HHHHHHHHHH75", MySimpleArrayAdapter.posoo + "");
-                    FunctionDeleteRowWhenSlidingRight(MySimpleArrayAdapter.posoo);
-                }
-                if (padding < -75) {
-
-
-                }
-                v.setPadding(padding, 0, 0, 0);
-
-*//*                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        historicX = event.getX();
-                        historicY = event.getY();
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        if (event.getX() - historicX < -DELTA) {
-                            Log.d("HHHHHHHHHH",  "-DELTA");
-                            FunctionDeleteRowWhenSlidingLeft();
-                            return true;
-                        } else if (event.getX() - historicX > DELTA) {
-                            Log.d("HHHHHHHHHH",  "DELTA");
-                            FunctionDeleteRowWhenSlidingRight();
-                            return true;
-                        }
-                        break;
-                    default:
-                        return false;*//*
-               // }
-                return false;
-            }
-        });*/
-
-
-
-
-
-
-        // Toast.makeText(this, "Fuel efficiency Imperial", Toast.LENGTH_SHORT).show();
         return v;
     }
 
     private void FunctionDeleteRowWhenSlidingRight(int pos) {
-        db.deleteBook(list.get(pos));
+        db1.deleteBook(list.get(pos));
         updateingListView();
     }
 
     private void FunctionDeleteRowWhenSlidingLeft(int pos) {
 
-        db.deleteBook(list.get(pos));
+        db1.deleteBook(list.get(pos));
         updateingListView();
 
     }
 
-    public void updateingListView() {
-        list = db.getAllBooks();
+    public ArrayList<Model> getData()
+    {
+        list = db1.getAllBooks();
 
-        String[] rr = new String[list.size()];
-        //initiate array
-        for(int i=0;i<list.size();i++){
-            rr[i]= i+"";
+        ArrayList<Model> models = new ArrayList();
+
+        for(int a=0;a<list.size();a++)
+        {
+            Model m = new Model(list.get(a).toString());
+            models.add(m);
         }
-        //  Log.d("HHHHHHHHHH listsize",list.size()+"");
+        return models;
+    }
+    public void updateingListView() {
 
-        adapter=new MySimpleArrayAdapter(getActivity().getBaseContext(), rr, list);
-
-
+        adapter = new ModelArrayAdapter(getActivity(), getData(),gestureListener);
         listView.setAdapter(adapter);
+        // adapter=new MySimpleArrayAdapter(getActivity().getBaseContext(), rr, list);
 
 
-        // next thing you have to do is check if your adapter has changed
+
+        // check if the adapter has changed
         adapter.notifyDataSetChanged();
     }
-
 
 }

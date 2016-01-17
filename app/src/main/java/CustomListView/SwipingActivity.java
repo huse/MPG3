@@ -3,13 +3,10 @@ package CustomListView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kpr.hus.mpg3.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by f1 on 1/4/2016.
@@ -75,22 +72,27 @@ public class SwipingActivity extends Activity {
        // lv.setAdapter(adapter);
     }
 
-    public ArrayList<Model> getData()
+ /*   public ArrayList<Model> getData()
     {
         ArrayList<Model> models = new ArrayList<Model>();
-        for(int a=0;a<10;a++)
+        for(int a=0;a<110;a++)
         {
             Model m = new Model(String.format("Item %d", a));
             models.add(m);
         }
         return models;
-    }
+    }*/
 
     public static class ViewHolder {
-        protected TextView text;
+        public TextView text;
+        public TextView text2;
+        public TextView text3;
+        public TextView text4;
+        public TextView text5;
+        public TextView text6;
         public ImageView icon;
-        protected CheckBox checkbox;
-        protected int position;
+       // protected CheckBox checkbox;
+       public int position;
         protected Model model;
         private int color;
         private int imageid;
@@ -99,7 +101,7 @@ public class SwipingActivity extends Activity {
         public ViewHolder()
         {
             position = 0;
-            imageid = R.drawable.bullet_go;
+            imageid = R.drawable.recycle_512;
             color = 0xFFFFFFFF;
             running = false;
         }
@@ -110,7 +112,7 @@ public class SwipingActivity extends Activity {
         public int getImageId() {
             return imageid;
         }
-        public void setRunning(boolean running) {
+      /*  public void setRunning(boolean running) {
             model.setRuning(running);
             if(running)
             {
@@ -122,7 +124,7 @@ public class SwipingActivity extends Activity {
                 imageid = R.drawable.bullet_go;
                 color = 0xFFFFFFFF;
             }
-        }
+        }*/
     }
 }
 
