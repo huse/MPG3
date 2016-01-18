@@ -28,6 +28,9 @@ import CustomListView.SwipingActivity;
 
 
 public class SecondFragment extends Fragment {
+    private SwipingActivity.ViewHolder viewHolder2;
+    private View view2;
+
     double truncateDouble(double number, int numDigits) {
         double result = number;
         String arg = "" + number;
@@ -46,7 +49,7 @@ public class SecondFragment extends Fragment {
     View.OnTouchListener gestureListener;
     ModelArrayAdapter adapter;
 
-    Button bt, bt2;
+    Button bt2Calculate, bt2Send;
     EditText et1, et2, etKM, etLiter,et2Price;
     TextView tvKM100, tvMPG;
     String a, b, c, d;
@@ -108,36 +111,40 @@ public class SecondFragment extends Fragment {
         Support.colorBackChange(v,0,255,55,255,155,155,200,255);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        bt = (Button) v.findViewById(R.id.button3);
-        bt2 = (Button) v.findViewById(R.id.button4);
+        bt2Calculate = (Button) v.findViewById(R.id.button3);
+        bt2Send = (Button) v.findViewById(R.id.button4);
         etKM = (EditText) v.findViewById(R.id.editText2Km);
         etLiter = (EditText) v.findViewById(R.id.editText2Liter);
         et2Price = (EditText) v.findViewById(R.id.editText2Price);
         tvKM100 = (TextView) v.findViewById(R.id.textView2KM);
         tvMPG = (TextView) v.findViewById(R.id.textView2MPG);
+        db2 = new MySQLiteHelper(getActivity().getBaseContext(),"second");
+
         listView = (ListView)v.findViewById(R.id.listView2);
 
+        updateingListView();
 
-        bt.setOnClickListener(new View.OnClickListener() {
+        bt2Calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
+                    Support.colorChange(v, "BLUE", "RED");
                     Double dd1 = Double.parseDouble(etKM.getText().toString());
                     Double dd2 = Double.parseDouble(etLiter.getText().toString());
                     Double dd;
-                    dd =  (dd2/ dd1)*100;
+                    dd = (dd2 / dd1) * 100;
                     Double ff = truncateDouble(dd, 2);
                     String ss;
                     ss = ff.toString();
-                    tvKM100.setText(ss + "   Liter per 100 KM");
+                    tvKM100.setText(ss);
 
                     Double dk1 = dd1 / 1.609344;
                     Double dk2 = dd2 / 3.785411784;
                     Double dkk = dk1 / dk2;
                     Double ff2 = truncateDouble(dkk, 2);
                     String sk = ff2.toString();
-                    tvMPG.setText(sk + "   Mile per Gallon");
+                    tvMPG.setText(sk);
                     sets(etKM.getText().toString(), etLiter.getText().toString(),
                             ss, sk);
                     InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -161,9 +168,10 @@ public class SecondFragment extends Fragment {
         });
 
 
-        bt2.setOnClickListener(new View.OnClickListener() {
+        bt2Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Support.colorChange(v, "BLUE", "RED");
                 Intent intent = new Intent();
                 intent.setType("text/plain");
                 intent.setAction(Intent.ACTION_SEND);
@@ -180,10 +188,15 @@ public class SecondFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int pos, long id) {
+                if(viewHolder2!=null){
+                    view2.setBackgroundColor(listView.getSolidColor());
+                    viewHolder2.icon.setVisibility(View.GONE);
+                    Log.d("Deselected", viewHolder2.position + "");
+                }
 
                 final SwipingActivity.ViewHolder viewHolder;
-                ;
-
+                view2=arg1;
+                viewHolder2 = ((SwipingActivity.ViewHolder) arg1.getTag());
                 viewHolder = ((SwipingActivity.ViewHolder) arg1.getTag());
                 //Using background color
                 int color = Color.TRANSPARENT;
@@ -195,7 +208,10 @@ public class SecondFragment extends Fragment {
                 substitute = arg1;
 
                 if (color != 0xFFFF5556) {
-                    arg1.setBackgroundColor(0xFFFF5556);
+
+
+                    Support.colorBackChange2(arg1, 200, 0, 144, 250, 200, 255, 76, 54);
+                    //arg1.setBackgroundColor(0xFFFF5556);
                     viewHolder.icon.setImageResource(R.drawable.recycle_512);
                     viewHolder.icon.setVisibility(View.VISIBLE);
                     Log.d("Selected", viewHolder.position + "");
@@ -208,6 +224,7 @@ public class SecondFragment extends Fragment {
                 viewHolder.icon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         substitute.setBackgroundColor(0xFFB1B1B1);
                         viewHolder.icon.setVisibility(View.GONE);
                         db2.deleteBook(list.get(poss));
@@ -219,6 +236,7 @@ public class SecondFragment extends Fragment {
                         viewHolder.text6.setText("");
                         Log.d("List", list.get(poss) + "");
                         Log.d("positon", poss + "");
+                        updateingListView();
                     }
 
 
@@ -227,7 +245,6 @@ public class SecondFragment extends Fragment {
             }
 
         });
-
         return v;
     }
     public ArrayList<Model> getData()

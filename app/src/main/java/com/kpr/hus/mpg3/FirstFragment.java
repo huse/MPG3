@@ -54,11 +54,12 @@ public class FirstFragment extends Fragment {
     ListView listView;
     ModelArrayAdapter adapter;
     View.OnTouchListener gestureListener;
-    Button bt, bt2,bt7;
+    Button bt1Calculate, bt2Send,bt7;
     EditText et1, etPrice, etMile, etGallon;
     TextView tvMPG, tvKM100;
     String a, b, c, d;
-
+    SwipingActivity.ViewHolder viewHolder2;
+View view2;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
     enum Direction {LEFT, RIGHT;}
@@ -118,8 +119,8 @@ public class FirstFragment extends Fragment {
 //        View root = v.getRootView();
 //        root.setBackgroundColor(Color.argb(155,55,255,255));
         Support.colorBackChange(v,0,55,255,255,155,55,255,255);
-        bt = (Button) v.findViewById(R.id.button3);
-        bt2 = (Button) v.findViewById(R.id.button4);
+        bt1Calculate = (Button) v.findViewById(R.id.button3);
+        bt2Send = (Button) v.findViewById(R.id.button4);
 
         etMile = (EditText) v.findViewById(R.id.editText);
         etGallon = (EditText) v.findViewById(R.id.editText2);
@@ -131,51 +132,52 @@ public class FirstFragment extends Fragment {
 
         updateingListView();
 
-       bt.setOnClickListener(new View.OnClickListener() {
+       bt1Calculate.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Support.colorChange(v, "BLUE", "RED");
+               try {
+                   Double dd1 = Double.parseDouble(etMile.getText().toString());
+                   Double dd2 = Double.parseDouble(etGallon.getText().toString());
+                   Double dd;
+                   dd = dd1 / dd2;
+                   Double ff = truncateDouble(dd, 2);
+                   String ss;
+                   ss = ff.toString();
+                   tvMPG.setText(ss);
+
+                   Double dk1 = dd1 * 1.609344;
+                   Double dk2 = dd2 * 3.785411784;
+                   Double dkk = (100.0 * dk2) / dk1;
+                   Double ff2 = truncateDouble(dkk, 2);
+                   String sk = ff2.toString();
+                   tvKM100.setText(sk);
+                   sets(etMile.getText().toString(), etGallon.getText().toString(),
+                           ss, sk);
+                   InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                   mgr.hideSoftInputFromWindow(etGallon.getWindowToken(), 0);
+                   mgr.hideSoftInputFromWindow(etMile.getWindowToken(), 0);
+
+               } catch (Exception e) {
+                   tvKM100.setText("invalid");
+                   tvMPG.setText("invalid");
+
+               }
+               Calendar c = Calendar.getInstance();
+               int day = c.get(Calendar.DAY_OF_MONTH);
+               int month = c.get(Calendar.MONTH) + 1;
+               int year = c.get(Calendar.YEAR);
+
+               db1.addBook(new Data(month + "/" + day + "/" + year, etMile.getText().toString(), etGallon.getText().toString(), etPrice.getText().toString(), tvMPG.getText().toString()));
+
+               updateingListView();
+
+           }
+       });
+        bt2Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Support.colorChange(v, "BLUE", "RED");
-                try {
-                    Double dd1 = Double.parseDouble(etMile.getText().toString());
-                    Double dd2 = Double.parseDouble(etGallon.getText().toString());
-                    Double dd;
-                    dd = dd1 / dd2;
-                    Double ff = truncateDouble(dd, 2);
-                    String ss;
-                    ss = ff.toString();
-                    tvMPG.setText(ss);
-
-                    Double dk1 = dd1 * 1.609344;
-                    Double dk2 = dd2 * 3.785411784;
-                    Double dkk = (100.0 * dk2) / dk1;
-                    Double ff2 = truncateDouble(dkk, 2);
-                    String sk = ff2.toString();
-                    tvKM100.setText(sk);
-                    sets(etMile.getText().toString(), etGallon.getText().toString(),
-                            ss, sk);
-                    InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    mgr.hideSoftInputFromWindow(etGallon.getWindowToken(), 0);
-                    mgr.hideSoftInputFromWindow(etMile.getWindowToken(), 0);
-
-                } catch (Exception e) {
-                    tvKM100.setText("invalid");
-                    tvMPG.setText("invalid");
-
-                }
-                Calendar c = Calendar.getInstance();
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH) + 1;
-                int year = c.get(Calendar.YEAR);
-
-                db1.addBook(new Data(month + "/" + day + "/" + year, etMile.getText().toString(), etGallon.getText().toString(), etPrice.getText().toString(), tvMPG.getText().toString()));
-
-                updateingListView();
-
-            }
-        });
-        bt2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setType("text/plain");
                 intent.setAction(Intent.ACTION_SEND);
@@ -192,10 +194,15 @@ public class FirstFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int pos, long id) {
+                if(viewHolder2!=null){
+                    view2.setBackgroundColor(listView.getSolidColor());
+                    viewHolder2.icon.setVisibility(View.GONE);
+                    Log.d("Deselected", viewHolder2.position + "");
+                }
 
                 final SwipingActivity.ViewHolder viewHolder;
-                ;
-
+                view2=arg1;
+                viewHolder2 = ((SwipingActivity.ViewHolder) arg1.getTag());
                 viewHolder = ((SwipingActivity.ViewHolder) arg1.getTag());
                 //Using background color
                 int color = Color.TRANSPARENT;
@@ -207,7 +214,10 @@ public class FirstFragment extends Fragment {
                 substitute = arg1;
 
                 if (color != 0xFFFF5556) {
-                    arg1.setBackgroundColor(0xFFFF5556);
+
+
+                    Support.colorBackChange2(arg1,200,0,144,250,200,255,76,54);
+                    //arg1.setBackgroundColor(0xFFFF5556);
                     viewHolder.icon.setImageResource(R.drawable.recycle_512);
                     viewHolder.icon.setVisibility(View.VISIBLE);
                     Log.d("Selected", viewHolder.position + "");
@@ -220,6 +230,7 @@ public class FirstFragment extends Fragment {
                 viewHolder.icon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         substitute.setBackgroundColor(0xFFB1B1B1);
                         viewHolder.icon.setVisibility(View.GONE);
                         db1.deleteBook(list.get(poss));
@@ -231,6 +242,7 @@ public class FirstFragment extends Fragment {
                         viewHolder.text6.setText("");
                         Log.d("List", list.get(poss) + "");
                         Log.d("positon", poss + "");
+                        updateingListView();
                     }
 
 

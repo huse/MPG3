@@ -45,7 +45,7 @@ public class ScreenSlidePageFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mPageNumber = getArguments().getInt(ARG_PAGE);
     }
-   // Button bt = new View.findViewById(R.id.button);
+   // Button bt1Calculate = new View.findViewById(R.id.button);
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                Bundle savedInstanceState) {

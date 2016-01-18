@@ -1,6 +1,7 @@
 package CustomListView;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,21 +33,27 @@ public class ModelArrayAdapter extends ArrayAdapter<Model>
         this.allModelItemsArray = new ArrayList<Model>();
 
         this.allModelItemsArray.addAll(list);
-     //   Collections.reverse(allModelItemsArray);
+       // Collections.reverse(allModelItemsArray);
         inflator = context.getLayoutInflater();
     }
    // private Map<Integer, View> myViews = new HashMap<Integer, View>();
-/*   @Override
-   public Model getItem(int position) {
-       return super.getItem(super.getCount() - position - 1);
-   }*/
+//
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+int reversePosition=position;
+/*
+if(allModelItemsArray.size()==1||position==0){
+    reversePosition=0;
+}else{
+    reversePosition= allModelItemsArray.size()-position;
+}*/
         View view = null;
-        if(position > allModelItemsArray.size())
-            return null;
-        Model m = allModelItemsArray.get(position);
+
+        Log.d("position", position + "");
+        Log.d("reversePosition", reversePosition+"");
+        Log.d("allMode", allModelItemsArray.size()+"");
+        Model m = allModelItemsArray.get(reversePosition);
         final ViewHolder viewHolder = new ViewHolder();
         ViewHolder holder = null;
         if (convertView == null) {
@@ -61,11 +68,11 @@ public class ModelArrayAdapter extends ArrayAdapter<Model>
         view = inflator.inflate(R.layout.list_row, null);
 
         view.setTag(viewHolder);
-        viewHolder.position = position;
+        viewHolder.position = reversePosition;
 
        // holder = viewHolder;
        // myViews.put(position, view);
-        viewHolder.position = position;
+        viewHolder.position = reversePosition;
         viewHolder.text = (TextView) view.findViewById(R.id.label1);
         viewHolder.text2 = (TextView) view.findViewById(R.id.label2);
         viewHolder.text3 = (TextView) view.findViewById(R.id.label3);
@@ -79,7 +86,7 @@ public class ModelArrayAdapter extends ArrayAdapter<Model>
             view.setOnTouchListener(this.listener);
 
         holder.model = m;
-        holder.position = position;
+        holder.position = reversePosition;
 
                 // in this line I modified the output as several textView.
         String string=m.getName();

@@ -136,8 +136,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // 2. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-
+        //Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.query(TABLE_BOOKS, null, null, null, null, null, KEY_ID + " DESC", null);
         // 3. go over each row, build data and add it to list
         Data data = null;
         if (cursor.moveToFirst()) {

@@ -3,15 +3,28 @@ package com.kpr.hus.mpg3;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import CustomListView.Model;
+import CustomListView.ModelArrayAdapter;
+import CustomListView.SwipingActivity;
 
 /**
  * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
@@ -21,6 +34,8 @@ import android.widget.Toast;
  * ScreenSlideActivity} samples.</p>
  */
 public class ForthFragment extends Fragment {
+    private SwipingActivity.ViewHolder viewHolder2;
+    private View view2;
     /**
      * The argument key for the page number this fragment represents.
      */
@@ -36,10 +51,21 @@ public class ForthFragment extends Fragment {
         }
         return result;
     }
-
-    Button bt5, bt6;
-    EditText et1, et2, et5, et6;
-    TextView tv1, tv2;
+    public void implicitSendText(View v){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "Message");
+        intent.setType("text/plain");
+        startActivity(intent);
+    }
+    List<Data> list;
+    MySQLiteHelper db4;
+    ListView listView;
+    ModelArrayAdapter adapter;
+    View.OnTouchListener gestureListener;
+    Button bt4Calculate, bt4Send;
+    EditText et1, et2, et4km100, et4Liter;
+    TextView tv4Km, tv4Mile;
     String a, b, c, d;
 
     public void sets(String a, String b, String c, String d) {
@@ -82,7 +108,7 @@ public class ForthFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mPageNumber = getArguments().getInt(ARG_PAGE);
     }
-    // Button bt = new View.findViewById(R.id.button);
+    // Button bt1Calculate = new View.findViewById(R.id.button);
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,56 +118,69 @@ public class ForthFragment extends Fragment {
         Support.colorBackChange(rootView,0,150,150,255,155,150,150,255);
        // getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        bt5 = (Button) rootView.findViewById(R.id.button5);
-        bt6 = (Button) rootView.findViewById(R.id.button6);
-        et5 = (EditText) rootView.findViewById(R.id.editText5);
-        et6 = (EditText) rootView.findViewById(R.id.editText6);
-        tv1 = (TextView) rootView.findViewById(R.id.textView8);
-        tv2 = (TextView) rootView.findViewById(R.id.textView10);
+        bt4Calculate = (Button) rootView.findViewById(R.id.button5);
+        bt4Send = (Button) rootView.findViewById(R.id.button6);
+        et4km100 = (EditText) rootView.findViewById(R.id.editText5);
+        et4Liter = (EditText) rootView.findViewById(R.id.editText6);
+        tv4Km  = (TextView) rootView.findViewById(R.id.textView8);
+        tv4Mile = (TextView) rootView.findViewById(R.id.textView10);
+        db4 = new MySQLiteHelper(getActivity().getBaseContext(),"forth");
+        listView = (ListView)rootView.findViewById(R.id.listView4);
         //  tvMPG.setTextSize(20);
         // tvKM100.setTextSize(20)
 
+        updateingListView();
 
-        bt5.setOnClickListener(new View.OnClickListener() {
+
+        bt4Calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
-                    Double dd1 = Double.parseDouble(et5.getText().toString());
-                    Double dd2 = Double.parseDouble(et6.getText().toString());
+                    Support.colorChange(v, "BLUE", "RED");
+                    Double dd1 = Double.parseDouble(et4km100.getText().toString());
+                    Double dd2 = Double.parseDouble(et4Liter.getText().toString());
                     Double dd;
-                    dd =  (dd2*100)/ dd1;
+                    dd = (dd2 * 100) / dd1;
                     Double ff = truncateDouble(dd, 2);
                     String ss;
                     ss = ff.toString();
-                    tv1.setText(ss + " ");
+                    tv4Km.setText(ss + " ");
 
                     //Double dk1 = dd1 / 1.609344;
                     //Double dk2 = dd2 / 3.785411784;
-                    Double dkk = dd/1.609344;
+                    Double dkk = dd / 1.609344;
                     Double ff2 = truncateDouble(dkk, 2);
                     String sk = ff2.toString();
-                    tv2.setText(sk + " ");
-                    sets(et5.getText().toString(), et6.getText().toString(),
+                    tv4Mile.setText(sk + " ");
+                    sets(et4km100.getText().toString(), et4Liter.getText().toString(),
                             ss, sk);
                     InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    mgr.hideSoftInputFromWindow(et6.getWindowToken(), 0);
-                    mgr.hideSoftInputFromWindow(et5.getWindowToken(), 0);
+                    mgr.hideSoftInputFromWindow(et4Liter.getWindowToken(), 0);
+                    mgr.hideSoftInputFromWindow(et4km100.getWindowToken(), 0);
 
                 } catch (Exception e) {
-                    tv2.setText("invalid");
-                    tv1.setText("invalid");
+                    tv4Mile.setText("invalid");
+                    tv4Km.setText("invalid");
 
                 }
+                Calendar c = Calendar.getInstance();
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int month = c.get(Calendar.MONTH) + 1;
+                int year = c.get(Calendar.YEAR);
 
+                db4.addBook(new Data(month + "/" + day + "/" + year, et4km100.getText().toString(), et4Liter.getText().toString(), tv4Km.getText().toString(), tv4Mile.getText().toString()));
+
+                updateingListView();
             }
         });
 
 
 
-        bt6.setOnClickListener(new View.OnClickListener() {
+        bt4Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Support.colorChange(v, "BLUE", "RED");
                 Intent intent = new Intent();
                 intent.setType("text/plain");
                 intent.setAction(Intent.ACTION_SEND);
@@ -152,7 +191,69 @@ public class ForthFragment extends Fragment {
 
         });
        // Toast.makeText(this, "Calculation Distance Metric", Toast.LENGTH_SHORT).show();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int pos, long id) {
+                if(viewHolder2!=null){
+                    view2.setBackgroundColor(listView.getSolidColor());
+                    viewHolder2.icon.setVisibility(View.GONE);
+                    Log.d("Deselected", viewHolder2.position + "");
+                }
+
+                final SwipingActivity.ViewHolder viewHolder;
+                view2=arg1;
+                viewHolder2 = ((SwipingActivity.ViewHolder) arg1.getTag());
+                viewHolder = ((SwipingActivity.ViewHolder) arg1.getTag());
+                //Using background color
+                int color = Color.TRANSPARENT;
+                Drawable background = arg1.getBackground();
+                if (background instanceof ColorDrawable) {
+                    color = ((ColorDrawable) background).getColor();
+                }
+                final View substitute;
+                substitute = arg1;
+
+                if (color != 0xFFFF5556) {
+
+
+                    Support.colorBackChange2(arg1, 200, 0, 144, 250, 200, 255, 76, 54);
+                    //arg1.setBackgroundColor(0xFFFF5556);
+                    viewHolder.icon.setImageResource(R.drawable.recycle_512);
+                    viewHolder.icon.setVisibility(View.VISIBLE);
+                    Log.d("Selected", viewHolder.position + "");
+                } else {
+                    arg1.setBackgroundColor(listView.getSolidColor());
+                    viewHolder.icon.setVisibility(View.GONE);
+                    Log.d("Deselected", viewHolder.position + "");
+                }
+                final int poss = pos;
+                viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        substitute.setBackgroundColor(0xFFB1B1B1);
+                        viewHolder.icon.setVisibility(View.GONE);
+                        db4.deleteBook(list.get(poss));
+                        viewHolder.text.setText("");
+                        viewHolder.text2.setText("Deleted");
+                        viewHolder.text3.setText("");
+                        viewHolder.text4.setText("");
+                        viewHolder.text5.setText("");
+                        viewHolder.text6.setText("");
+                        Log.d("List", list.get(poss) + "");
+                        Log.d("positon", poss + "");
+                        updateingListView();
+                    }
+
+
+                });
+
+            }
+
+        });
         return rootView;
     }
 
@@ -162,4 +263,29 @@ public class ForthFragment extends Fragment {
     public int getPageNumber() {
         return mPageNumber;
     }
+    public ArrayList<Model> getData()
+    {
+        list = db4.getAllBooks();
+
+        ArrayList<Model> models = new ArrayList();
+
+        for(int a=0;a<list.size();a++)
+        {
+            Model m = new Model(list.get(a).toString());
+            models.add(m);
+        }
+        return models;
+    }
+    public void updateingListView() {
+
+        adapter = new ModelArrayAdapter(getActivity(), getData(),gestureListener);
+        listView.setAdapter(adapter);
+        // adapter=new MySimpleArrayAdapter(getActivity().getBaseContext(), rr, list);
+
+
+
+        // check if the adapter has changed
+        adapter.notifyDataSetChanged();
+    }
+
 }

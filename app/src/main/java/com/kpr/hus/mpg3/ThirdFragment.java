@@ -34,6 +34,8 @@ import CustomListView.SwipingActivity.ViewHolder;
 
  */
 public class ThirdFragment extends Fragment {
+    private SwipingActivity.ViewHolder viewHolder2;
+    private View view2;
     /**
      * The argument key for the page number this fragment represents.
      */
@@ -54,7 +56,7 @@ public class ThirdFragment extends Fragment {
     ListView listView;
     //ArrayAdapter<String> adapter;
     ModelArrayAdapter adapter;
-    Button bt5, bt6;
+    Button bt3Calculate, bt3Send;
     EditText et1, et2, et5, et6;
     TextView tv1, tv2;
 
@@ -103,7 +105,7 @@ public class ThirdFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mPageNumber = getArguments().getInt(ARG_PAGE);
     }
-    // Button bt = new View.findViewById(R.id.button);
+    // Button bt1Calculate = new View.findViewById(R.id.button);
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -112,8 +114,8 @@ public class ThirdFragment extends Fragment {
                 .inflate(R.layout.fragment_third, container, false);
         Support.colorBackChange(rootView,0,255,117,50,155,255,117,50);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
-        bt5 = (Button) rootView.findViewById(R.id.button5);
-        bt6 = (Button) rootView.findViewById(R.id.button6);
+        bt3Calculate = (Button) rootView.findViewById(R.id.button5);
+        bt3Send = (Button) rootView.findViewById(R.id.button6);
         et5 = (EditText) rootView.findViewById(R.id.editText5);
         et6 = (EditText) rootView.findViewById(R.id.editText6);
         tv1 = (TextView) rootView.findViewById(R.id.textView8);
@@ -125,15 +127,16 @@ public class ThirdFragment extends Fragment {
         // tvKM100.setTextSize(20)
 
 
-        bt5.setOnClickListener(new View.OnClickListener() {
+        bt3Calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
+                    Support.colorChange(v, "BLUE", "RED");
                     Double dd1 = Double.parseDouble(et5.getText().toString());
                     Double dd2 = Double.parseDouble(et6.getText().toString());
                     Double dd;
-                    dd =  (dd2* dd1);
+                    dd = (dd2 * dd1);
                     Double ff = truncateDouble(dd, 2);
                     String ss;
                     ss = ff.toString();
@@ -141,7 +144,7 @@ public class ThirdFragment extends Fragment {
 
                     //Double dk1 = dd1 / 1.609344;
                     //Double dk2 = dd2 / 3.785411784;
-                    Double dkk = 1.609344*dd;
+                    Double dkk = 1.609344 * dd;
                     Double ff2 = truncateDouble(dkk, 2);
                     String sk = ff2.toString();
                     tv2.setText(sk + " ");
@@ -160,7 +163,7 @@ public class ThirdFragment extends Fragment {
 
                 Calendar c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH)+1;
+                int month = c.get(Calendar.MONTH) + 1;
                 int year = c.get(Calendar.YEAR);
 
                 // textView2.setText(month+"/"+day+"/"+year );
@@ -174,9 +177,10 @@ public class ThirdFragment extends Fragment {
         });
 
 
-        bt6.setOnClickListener(new View.OnClickListener() {
+        bt3Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Support.colorChange(v, "BLUE", "RED");
                 Intent intent = new Intent();
                 intent.setType("text/plain");
                 intent.setAction(Intent.ACTION_SEND);
@@ -188,58 +192,69 @@ public class ThirdFragment extends Fragment {
         });
 
 
-       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int pos, long id) {
+                if(viewHolder2!=null){
+                    view2.setBackgroundColor(listView.getSolidColor());
+                    viewHolder2.icon.setVisibility(View.GONE);
+                    Log.d("Deselected", viewHolder2.position + "");
+                }
 
-           @Override
-           public void onItemClick(AdapterView<?> arg0, View arg1,
-                                   int pos, long id) {
+                final SwipingActivity.ViewHolder viewHolder;
+                view2=arg1;
+                viewHolder2 = ((SwipingActivity.ViewHolder) arg1.getTag());
+                viewHolder = ((SwipingActivity.ViewHolder) arg1.getTag());
+                //Using background color
+                int color = Color.TRANSPARENT;
+                Drawable background = arg1.getBackground();
+                if (background instanceof ColorDrawable) {
+                    color = ((ColorDrawable) background).getColor();
+                }
+                final View substitute;
+                substitute = arg1;
 
-               final SwipingActivity.ViewHolder viewHolder;;
-
-               viewHolder = ((ViewHolder) arg1.getTag());
-               //Using background color
-               int color = Color.TRANSPARENT;
-               Drawable background = arg1.getBackground();
-               if (background instanceof ColorDrawable)
-               {color = ((ColorDrawable) background).getColor();}
-               final View substitute;
-               substitute= arg1;
-
-               if (color != 0xFFFF5556 ) {
-                   arg1.setBackgroundColor(0xFFFF5556);
-                   viewHolder.icon.setImageResource(R.drawable.recycle_512);
-                   viewHolder.icon.setVisibility(View.VISIBLE);
-                   Log.d("Selected", viewHolder.position + "");
-               } else {
-                   arg1.setBackgroundColor(listView.getSolidColor());
-                   viewHolder.icon.setVisibility(View.GONE);
-                   Log.d("Deselected", viewHolder.position + "");
-               }
-               final int poss = pos;
-               viewHolder.icon.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       substitute.setBackgroundColor(0xFFB1B1B1);
-                       viewHolder.icon.setVisibility(View.GONE);
-                       db3.deleteBook(list.get(poss));
-                       viewHolder.text.setText("");
-                       viewHolder.text2.setText("Deleted");
-                       viewHolder.text3.setText("");
-                       viewHolder.text4.setText("");
-                       viewHolder.text5.setText("");
-                       viewHolder.text6.setText("");
-                       Log.d("List", list.get(poss) + "");
-                       Log.d("positon", poss + "");
-                   }
+                if (color != 0xFFFF5556) {
 
 
-               });
+                    Support.colorBackChange2(arg1, 200, 0, 144, 250, 200, 255, 76, 54);
+                    //arg1.setBackgroundColor(0xFFFF5556);
+                    viewHolder.icon.setImageResource(R.drawable.recycle_512);
+                    viewHolder.icon.setVisibility(View.VISIBLE);
+                    Log.d("Selected", viewHolder.position + "");
+                } else {
+                    arg1.setBackgroundColor(listView.getSolidColor());
+                    viewHolder.icon.setVisibility(View.GONE);
+                    Log.d("Deselected", viewHolder.position + "");
+                }
+                final int poss = pos;
+                viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-           }
+                        substitute.setBackgroundColor(0xFFB1B1B1);
+                        viewHolder.icon.setVisibility(View.GONE);
+                        db3.deleteBook(list.get(poss));
+                        viewHolder.text.setText("");
+                        viewHolder.text2.setText("Deleted");
+                        viewHolder.text3.setText("");
+                        viewHolder.text4.setText("");
+                        viewHolder.text5.setText("");
+                        viewHolder.text6.setText("");
+                        Log.d("List", list.get(poss) + "");
+                        Log.d("positon", poss + "");
+                        updateingListView();
+                    }
 
-       });
+
+                });
+
+            }
+
+        });
         /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             private SwipingActivity.ViewHolder viewHolder;
