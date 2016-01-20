@@ -1,6 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.hosen.khp.mymy.ThirdFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    tools:context="com.hosen.khp.mymy.ThirdFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -324,8 +327,17 @@
             android:id="@+id/listView3"
             android:longClickable="true"
             android:layout_below="@+id/linearLayout9"
+            android:layout_above="@+id/adView"
              />
-
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
+        </com.google.android.gms.ads.AdView>
     </RelativeLayout>
 
 

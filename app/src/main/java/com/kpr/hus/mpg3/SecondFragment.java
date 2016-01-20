@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -43,6 +46,7 @@ public class SecondFragment extends Fragment {
         }
         return result;
     }
+    private AdView mAdView;
     List<Data> list;
     MySQLiteHelper db2;
     ListView listView;
@@ -62,8 +66,8 @@ public class SecondFragment extends Fragment {
     }
 
     public String gets() {
-        return "Km = " + a + "   Liter = " + b + "    Liter per 100 Km = "
-                + c + "    Mile per Gallon = " + d;
+        return "Km = " + etKM.getText() + "   Liter = " + etLiter.getText() + "    Liter per 100 Km = "
+                + tvKM100.getText() + "    Mile per Gallon = " + tvMPG.getText()+ "    Price = " +et2Price.getText();
     }
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -121,7 +125,9 @@ public class SecondFragment extends Fragment {
         db2 = new MySQLiteHelper(getActivity().getBaseContext(),"second");
 
         listView = (ListView)v.findViewById(R.id.listView2);
-
+        mAdView = (AdView) v.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         updateingListView();
 
         bt2Calculate.setOnClickListener(new View.OnClickListener() {
@@ -188,14 +194,14 @@ public class SecondFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int pos, long id) {
-                if(viewHolder2!=null){
+                if (viewHolder2 != null) {
                     view2.setBackgroundColor(listView.getSolidColor());
                     viewHolder2.icon.setVisibility(View.GONE);
                     Log.d("Deselected", viewHolder2.position + "");
                 }
 
                 final SwipingActivity.ViewHolder viewHolder;
-                view2=arg1;
+                view2 = arg1;
                 viewHolder2 = ((SwipingActivity.ViewHolder) arg1.getTag());
                 viewHolder = ((SwipingActivity.ViewHolder) arg1.getTag());
                 //Using background color
@@ -245,6 +251,22 @@ public class SecondFragment extends Fragment {
             }
 
         });
+        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(v);
+        // Add listener
+        softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
+            @Override
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+                Log.d("hhhhhh", "keyboard opened");
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSoftKeyboardClosed() {
+                Log.d("hhhhhh", "keyboard Closed");
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
+
         return v;
     }
     public ArrayList<Model> getData()

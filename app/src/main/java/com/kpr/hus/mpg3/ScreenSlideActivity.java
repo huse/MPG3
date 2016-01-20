@@ -145,7 +145,7 @@ default:
         // Add either a "next" or "finish" button to the action bar, depending on which page
         // is currently selected.
         MenuItem item = menu.add(Menu.NONE, R.id.action_next, Menu.NONE,
-                (mPager.getCurrentItem() == mPagerAdapter.getCount() - 1)
+                (mPager.getCurrentItem() == mPagerAdapter.getCount()-1)
                         ? R.string.action_finish
                         : R.string.action_next);
         item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT);
@@ -224,12 +224,29 @@ default:
         public int getCount() {
             return NUM_PAGES;
         }
+
+        //PUT TITLE FOR EACH FRAGMENT
         @Override
         public CharSequence getPageTitle(int position) {
 
            setTitle2(position);
 
-            return getTitle2() + "  " + (position);
+            return getTitle2();
         }
     }
+
+    private ScreenSlideActivity selectedFragment;
+
+  /*  @Override
+    public void onBackPressed() {
+
+*//*
+        this.finish();
+
+
+        super.onBackPressed();*//*
+
+    }*/
+
+
 }

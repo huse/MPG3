@@ -73,7 +73,7 @@ if(allModelItemsArray.size()==1||position==0){
        // holder = viewHolder;
        // myViews.put(position, view);
         viewHolder.position = reversePosition;
-        viewHolder.text = (TextView) view.findViewById(R.id.label1);
+        //viewHolder.text = (TextView) view.findViewById(R.id.label1);
         viewHolder.text2 = (TextView) view.findViewById(R.id.label2);
         viewHolder.text3 = (TextView) view.findViewById(R.id.label3);
         viewHolder.text4 = (TextView) view.findViewById(R.id.label4);
@@ -91,7 +91,7 @@ if(allModelItemsArray.size()==1||position==0){
                 // in this line I modified the output as several textView.
         String string=m.getName();
         String[] parts = string.split(Pattern.quote(",")); // Split on period.
-        holder.text.setText(parts[0]);
+       // holder.text.setText(parts[0]);
         holder.text2.setText(parts[1]);
         holder.text3.setText(parts[2]);
         holder.text4.setText(parts[3]);

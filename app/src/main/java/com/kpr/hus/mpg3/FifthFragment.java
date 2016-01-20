@@ -3,6 +3,7 @@ package com.kpr.hus.mpg3;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
@@ -34,7 +38,7 @@ public class FifthFragment extends Fragment {
         }
         return result;
     }
-
+    private AdView mAdView;
     Button bt1, bt2,bt3,bt4;
     EditText et1, et2, et3, et4;
     TextView tv1, tv2,tv3,tv4;
@@ -87,7 +91,9 @@ public class FifthFragment extends Fragment {
         tv2 = (TextView) rootView.findViewById(R.id.textView12);
         tv3 = (TextView) rootView.findViewById(R.id.textView13);
         tv4 = (TextView) rootView.findViewById(R.id.textView14);
-
+        mAdView = (AdView) rootView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
         bt1.setOnClickListener(new View.OnClickListener() {
@@ -202,7 +208,21 @@ public class FifthFragment extends Fragment {
 
 
        // Toast.makeText(this, "Converter", Toast.LENGTH_LONG).show();
+        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
+        // Add listener
+        softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
+            @Override
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+                Log.d("hhhhhh", "keyboard opened");
+                mAdView.setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onSoftKeyboardClosed() {
+                Log.d("hhhhhh", "keyboard Closed");
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
         return rootView;
     }
 

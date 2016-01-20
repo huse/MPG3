@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -25,7 +28,6 @@ import java.util.List;
 import CustomListView.Model;
 import CustomListView.ModelArrayAdapter;
 import CustomListView.SwipingActivity;
-
 //dESIGNED BY hOSEIN kAJEPOR
 
 public class FirstFragment extends Fragment {
@@ -49,6 +51,7 @@ public class FirstFragment extends Fragment {
         intent.setType("text/plain");
         startActivity(intent);
     }
+    private AdView mAdView;
     List<Data> list;
     MySQLiteHelper db1;
     ListView listView;
@@ -59,7 +62,7 @@ public class FirstFragment extends Fragment {
     TextView tvMPG, tvKM100;
     String a, b, c, d;
     SwipingActivity.ViewHolder viewHolder2;
-View view2;
+    View view2;
     float historicX = Float.NaN, historicY = Float.NaN;
     static final int DELTA = 50;
     enum Direction {LEFT, RIGHT;}
@@ -72,8 +75,11 @@ View view2;
     }
 
     public String gets() {
-        return "Mile = " + a + "   Gallon = " + b + "    Mile per Gallon = "
-                + c + "    Liter per 100 Km = " + d;
+Log.d("HHHHHHHHHList", list.size()+"");
+        Log.d("HHHHHHHHHListView", listView.getId()+"");
+       // return db1.getData(87).toString();
+        return "Mile = " + etMile.getText() + "   Gallon = " + etGallon.getText() + "    Mile per Gallon = "
+                + tvMPG.getText() + "    Liter per 100 Km = " + tvKM100.getText()+ "    Price = " +etPrice.getText();
     }
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -107,6 +113,7 @@ View view2;
         super.onCreate(savedInstanceState);
         mPageNumber = getArguments().getInt(ARG_PAGE);
 
+
     }
 
     @Override
@@ -115,6 +122,7 @@ View view2;
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_first, container, false);
+
        // v.setBackgroundColor(Color.BLACK);
 //        View root = v.getRootView();
 //        root.setBackgroundColor(Color.argb(155,55,255,255));
@@ -129,6 +137,9 @@ View view2;
         tvKM100 = (TextView) v.findViewById(R.id.textView6);
         db1 = new MySQLiteHelper(getActivity().getBaseContext(),"first");
         listView = (ListView)v.findViewById(R.id.listView);
+        mAdView = (AdView) v.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         updateingListView();
 
@@ -194,14 +205,14 @@ View view2;
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int pos, long id) {
-                if(viewHolder2!=null){
+                if (viewHolder2 != null) {
                     view2.setBackgroundColor(listView.getSolidColor());
                     viewHolder2.icon.setVisibility(View.GONE);
                     Log.d("Deselected", viewHolder2.position + "");
                 }
 
                 final SwipingActivity.ViewHolder viewHolder;
-                view2=arg1;
+                view2 = arg1;
                 viewHolder2 = ((SwipingActivity.ViewHolder) arg1.getTag());
                 viewHolder = ((SwipingActivity.ViewHolder) arg1.getTag());
                 //Using background color
@@ -213,15 +224,16 @@ View view2;
                 final View substitute;
                 substitute = arg1;
 
-                if (color != 0xFFFF5556) {
+                if (color != Color.argb(200, 255, 76, 54)) {
 
 
-                    Support.colorBackChange2(arg1,200,0,144,250,200,255,76,54);
-                    //arg1.setBackgroundColor(0xFFFF5556);
+                    Support.colorBackChange2(arg1, 200, 0, 144, 250, 200, 255, 76, 54);
+                    // arg1.setBackgroundColor(Color.argb( 200, 255, 76, 54));
                     viewHolder.icon.setImageResource(R.drawable.recycle_512);
                     viewHolder.icon.setVisibility(View.VISIBLE);
                     Log.d("Selected", viewHolder.position + "");
                 } else {
+
                     arg1.setBackgroundColor(listView.getSolidColor());
                     viewHolder.icon.setVisibility(View.GONE);
                     Log.d("Deselected", viewHolder.position + "");
@@ -243,6 +255,7 @@ View view2;
                         Log.d("List", list.get(poss) + "");
                         Log.d("positon", poss + "");
                         updateingListView();
+
                     }
 
 
@@ -251,6 +264,23 @@ View view2;
             }
 
         });
+        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(v);
+        // Add listener
+        softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
+            @Override
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+                Log.d("hhhhhh", "keyboard opened");
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSoftKeyboardClosed() {
+                Log.d("hhhhhh", "keyboard Closed");
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
+        // then just handle callbacks
+
         return v;
     }
 

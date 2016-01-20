@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -58,13 +61,14 @@ public class ForthFragment extends Fragment {
         intent.setType("text/plain");
         startActivity(intent);
     }
+    private AdView mAdView;
     List<Data> list;
     MySQLiteHelper db4;
     ListView listView;
     ModelArrayAdapter adapter;
     View.OnTouchListener gestureListener;
     Button bt4Calculate, bt4Send;
-    EditText et1, et2, et4km100, et4Liter;
+    EditText et4km100, et4Liter;
     TextView tv4Km, tv4Mile;
     String a, b, c, d;
 
@@ -79,8 +83,8 @@ public class ForthFragment extends Fragment {
         return "Distance you can go by your fuel:" +
                 "" +
                 "" +
-                " " +"Liter per 100Km = " + a + "   Fuel in your tank, Liter = " + b + "    The Distance you can go - in Km = "
-                + c + "    The Distance you can go - in Mile = " + d;
+                " " +"Liter per 100Km = " + et4km100.getText() + "   Fuel in your tank, Liter = " + et4Liter.getText() + "    The Distance you can go - in Km = "
+                + tv4Km.getText() + "    The Distance you can go - in Mile = " + tv4Mile.getText();
     }
     public static final String ARG_PAGE = "page";
 
@@ -126,8 +130,9 @@ public class ForthFragment extends Fragment {
         tv4Mile = (TextView) rootView.findViewById(R.id.textView10);
         db4 = new MySQLiteHelper(getActivity().getBaseContext(),"forth");
         listView = (ListView)rootView.findViewById(R.id.listView4);
-        //  tvMPG.setTextSize(20);
-        // tvKM100.setTextSize(20)
+        mAdView = (AdView) rootView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         updateingListView();
 
@@ -197,14 +202,14 @@ public class ForthFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1,
                                     int pos, long id) {
-                if(viewHolder2!=null){
+                if (viewHolder2 != null) {
                     view2.setBackgroundColor(listView.getSolidColor());
                     viewHolder2.icon.setVisibility(View.GONE);
                     Log.d("Deselected", viewHolder2.position + "");
                 }
 
                 final SwipingActivity.ViewHolder viewHolder;
-                view2=arg1;
+                view2 = arg1;
                 viewHolder2 = ((SwipingActivity.ViewHolder) arg1.getTag());
                 viewHolder = ((SwipingActivity.ViewHolder) arg1.getTag());
                 //Using background color
@@ -253,6 +258,21 @@ public class ForthFragment extends Fragment {
 
             }
 
+        });
+        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
+        // Add listener
+        softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
+            @Override
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+                Log.d("hhhhhh", "keyboard opened");
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSoftKeyboardClosed() {
+                Log.d("hhhhhh", "keyboard Closed");
+                mAdView.setVisibility(View.VISIBLE);
+            }
         });
         return rootView;
     }

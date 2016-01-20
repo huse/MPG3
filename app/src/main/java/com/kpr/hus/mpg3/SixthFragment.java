@@ -2,10 +2,14 @@ package com.kpr.hus.mpg3;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 /**
  * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
@@ -24,7 +28,7 @@ public class SixthFragment extends Fragment {
      * The fragment's page number, which is set to the argument value for {@link #ARG_PAGE}.
      */
     private int mPageNumber;
-
+    private AdView mAdView;
     /**
      * Factory method for this fragment class. Constructs a new fragment for the given page number.
      */
@@ -52,6 +56,25 @@ public class SixthFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_sixth, container, false);
         Support.colorBackChange(rootView,0,50, 150, 100,155,50, 150, 100);
+        mAdView = (AdView) rootView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
+        // Add listener
+        softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
+            @Override
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+                Log.d("hhhhhh", "keyboard opened");
+                mAdView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onSoftKeyboardClosed() {
+                Log.d("hhhhhh", "keyboard Closed");
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
 /*
         tvMPG = (TextView) rootView.findViewById(R.id.textView3);
         tvKM100 = (TextView) rootView.findViewById(R.id.textView4);

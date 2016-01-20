@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -51,14 +54,15 @@ public class ThirdFragment extends Fragment {
         }
         return result;
     }
+    private AdView mAdView;
     List<Data> list;
     MySQLiteHelper db3;
     ListView listView;
     //ArrayAdapter<String> adapter;
     ModelArrayAdapter adapter;
     Button bt3Calculate, bt3Send;
-    EditText et1, et2, et5, et6;
-    TextView tv1, tv2;
+    EditText et3MPG, et3Gallon;
+    TextView tv3Mile, tv3Km;
 
     String a, b, c, d;
     View.OnTouchListener gestureListener;
@@ -75,8 +79,8 @@ public class ThirdFragment extends Fragment {
     public String gets() {
         return "Distance you can go by your fuel: " +
                 "" +
-                "" +" Your MpG = " + a + "  Fuel in your tank, Gallon = " + b + "    The Distance you can go - in Mile = "
-                + c + "    The Distance you can go - in Km = " + d;
+                "" +" Your MpG = " + et3MPG.getText() + "  Fuel in your tank, Gallon = " + et3Gallon.getText() + "    The Distance you can go - in Mile = "
+                + tv3Mile.getText() + "    The Distance you can go - in Km = " + tv3Km.getText();
     }
 
         public static final String ARG_PAGE = "page";
@@ -116,15 +120,15 @@ public class ThirdFragment extends Fragment {
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         bt3Calculate = (Button) rootView.findViewById(R.id.button5);
         bt3Send = (Button) rootView.findViewById(R.id.button6);
-        et5 = (EditText) rootView.findViewById(R.id.editText5);
-        et6 = (EditText) rootView.findViewById(R.id.editText6);
-        tv1 = (TextView) rootView.findViewById(R.id.textView8);
-        tv2 = (TextView) rootView.findViewById(R.id.textView10);
+        et3MPG = (EditText) rootView.findViewById(R.id.editText5);
+        et3Gallon = (EditText) rootView.findViewById(R.id.editText6);
+        tv3Mile = (TextView) rootView.findViewById(R.id.textView8);
+        tv3Km = (TextView) rootView.findViewById(R.id.textView10);
         db3 = new MySQLiteHelper(getActivity().getBaseContext(),"third");
         listView = (ListView)rootView.findViewById(R.id.listView3);
-       // imageView= (ImageView)rootView.findViewById(R.id.icon);
-        //  tvMPG.setTextSize(20);
-        // tvKM100.setTextSize(20)
+        mAdView = (AdView) rootView.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
 
         bt3Calculate.setOnClickListener(new View.OnClickListener() {
@@ -133,31 +137,31 @@ public class ThirdFragment extends Fragment {
 
                 try {
                     Support.colorChange(v, "BLUE", "RED");
-                    Double dd1 = Double.parseDouble(et5.getText().toString());
-                    Double dd2 = Double.parseDouble(et6.getText().toString());
+                    Double dd1 = Double.parseDouble(et3MPG.getText().toString());
+                    Double dd2 = Double.parseDouble(et3Gallon.getText().toString());
                     Double dd;
                     dd = (dd2 * dd1);
                     Double ff = truncateDouble(dd, 2);
                     String ss;
                     ss = ff.toString();
-                    tv1.setText(ss + " ");
+                    tv3Mile.setText(ss + " ");
 
                     //Double dk1 = dd1 / 1.609344;
                     //Double dk2 = dd2 / 3.785411784;
                     Double dkk = 1.609344 * dd;
                     Double ff2 = truncateDouble(dkk, 2);
                     String sk = ff2.toString();
-                    tv2.setText(sk + " ");
-                    sets(et5.getText().toString(), et6.getText().toString(),
+                    tv3Km.setText(sk + " ");
+                    sets(et3MPG.getText().toString(), et3Gallon.getText().toString(),
                             ss, sk);
                     //for finish keypad after press button.
                     InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    mgr.hideSoftInputFromWindow(et6.getWindowToken(), 0);
-                    mgr.hideSoftInputFromWindow(et5.getWindowToken(), 0);
+                    mgr.hideSoftInputFromWindow(et3Gallon.getWindowToken(), 0);
+                    mgr.hideSoftInputFromWindow(et3MPG.getWindowToken(), 0);
 
                 } catch (Exception e) {
-                    tv2.setText("invalid");
-                    tv1.setText("invalid");
+                    tv3Km.setText("invalid");
+                    tv3Mile.setText("invalid");
 
                 }
 
@@ -168,7 +172,7 @@ public class ThirdFragment extends Fragment {
 
                 // textView2.setText(month+"/"+day+"/"+year );
                 // db1.getAllBooks();
-                db3.addBook(new Data(month + "/" + day + "/" + year, et5.getText().toString(), et6.getText().toString(), tv1.getText().toString(), tv2.getText().toString()));
+                db3.addBook(new Data(month + "/" + day + "/" + year, et3MPG.getText().toString(), et3Gallon.getText().toString(), tv3Mile.getText().toString(), tv3Km.getText().toString()));
 
 
                 updateingListView();
@@ -373,7 +377,21 @@ public class ThirdFragment extends Fragment {
             }
         };*/
         updateingListView();
+        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
+        // Add listener
+        softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
+            @Override
+            public void onSoftKeyboardOpened(int keyboardHeightInPx) {
+                Log.d("hhhhhh", "keyboard opened");
+                mAdView.setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onSoftKeyboardClosed() {
+                Log.d("hhhhhh", "keyboard Closed");
+                mAdView.setVisibility(View.VISIBLE);
+            }
+        });
         return rootView;
     }
 /*    public boolean cyclingButt(View arg1,ViewHolder viewHolder){
