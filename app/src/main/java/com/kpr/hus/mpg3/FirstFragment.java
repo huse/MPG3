@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -121,26 +122,26 @@ Log.d("HHHHHHHHHList", list.size()+"");
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v = inflater.inflate(R.layout.fragment_first, container, false);
+       final View rootView = inflater.inflate(R.layout.fragment_first, container, false);
 
        // v.setBackgroundColor(Color.BLACK);
 //        View root = v.getRootView();
 //        root.setBackgroundColor(Color.argb(155,55,255,255));
-        Support.colorBackChange(v,0,55,255,255,155,55,255,255);
-        bt1Calculate = (Button) v.findViewById(R.id.button3);
-        bt2Send = (Button) v.findViewById(R.id.button4);
+        Support.colorBackChange(rootView,0,55,255,255,155,55,255,255);
+        bt1Calculate = (Button) rootView.findViewById(R.id.button3);
+        bt2Send = (Button) rootView.findViewById(R.id.button4);
 
-        etMile = (EditText) v.findViewById(R.id.editText);
-        etGallon = (EditText) v.findViewById(R.id.editText2);
-        etPrice = (EditText) v.findViewById(R.id.editText6);
-        tvMPG = (TextView) v.findViewById(R.id.textView4);
-        tvKM100 = (TextView) v.findViewById(R.id.textView6);
+        etMile = (EditText) rootView.findViewById(R.id.editText);
+        etGallon = (EditText) rootView.findViewById(R.id.editText2);
+        etPrice = (EditText) rootView.findViewById(R.id.editText6);
+        tvMPG = (TextView) rootView.findViewById(R.id.textView4);
+        tvKM100 = (TextView) rootView.findViewById(R.id.textView6);
         db1 = new MySQLiteHelper(getActivity().getBaseContext(),"first");
-        listView = (ListView)v.findViewById(R.id.listView);
-        mAdView = (AdView) v.findViewById(R.id.adView);
+        listView = (ListView)rootView.findViewById(R.id.listView);
+        mAdView = (AdView) rootView.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
+        setListViewHeightBasedOnChildren(listView);
         updateingListView();
 
        bt1Calculate.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +211,7 @@ Log.d("HHHHHHHHHList", list.size()+"");
                     viewHolder2.icon.setVisibility(View.GONE);
                     Log.d("Deselected", viewHolder2.position + "");
                 }
-
+                rootView.getParent().requestDisallowInterceptTouchEvent(true);
                 final SwipingActivity.ViewHolder viewHolder;
                 view2 = arg1;
                 viewHolder2 = ((SwipingActivity.ViewHolder) arg1.getTag());
@@ -238,6 +239,7 @@ Log.d("HHHHHHHHHList", list.size()+"");
                     viewHolder.icon.setVisibility(View.GONE);
                     Log.d("Deselected", viewHolder.position + "");
                 }
+                //delete icon listener
                 final int poss = pos;
                 viewHolder.icon.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -246,7 +248,7 @@ Log.d("HHHHHHHHHList", list.size()+"");
                         substitute.setBackgroundColor(0xFFB1B1B1);
                         viewHolder.icon.setVisibility(View.GONE);
                         db1.deleteBook(list.get(poss));
-                        viewHolder.text.setText("");
+//                        viewHolder.text.setText("");
                         viewHolder.text2.setText("Deleted");
                         viewHolder.text3.setText("");
                         viewHolder.text4.setText("");
@@ -264,7 +266,7 @@ Log.d("HHHHHHHHHList", list.size()+"");
             }
 
         });
-        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(v);
+        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
         // Add listener
         softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
             @Override
@@ -281,9 +283,31 @@ Log.d("HHHHHHHHHList", list.size()+"");
         });
         // then just handle callbacks
 
-        return v;
+        return rootView;
     }
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
 
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+    }
     private void FunctionDeleteRowWhenSlidingRight(int pos) {
         db1.deleteBook(list.get(pos));
         updateingListView();
