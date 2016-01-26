@@ -234,7 +234,7 @@ public class SecondFragment extends Fragment {
                         substitute.setBackgroundColor(0xFFB1B1B1);
                         viewHolder.icon.setVisibility(View.GONE);
                         db2.deleteBook(list.get(poss));
-                        viewHolder.text.setText("");
+                      //  viewHolder.text.setText("");
                         viewHolder.text2.setText("Deleted");
                         viewHolder.text3.setText("");
                         viewHolder.text4.setText("");
