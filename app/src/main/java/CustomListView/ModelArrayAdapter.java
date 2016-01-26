@@ -66,7 +66,7 @@ if(allModelItemsArray.size()==1||position==0){
         }
 
         view = inflator.inflate(R.layout.list_row, null);
-
+       // view = inflator.inflate(R.layout.list_row, parent, false);
         view.setTag(viewHolder);
         viewHolder.position = reversePosition;
 

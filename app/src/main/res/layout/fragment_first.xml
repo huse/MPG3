@@ -5,7 +5,7 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context="com.hosen.khp.mymy.SecondFragment">
 
-    <ScrollView
+    <custum.VerticalScrollview
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/scrollView3" >
@@ -182,8 +182,7 @@
                 android:layout_height="40dp"
                 android:layout_below="@+id/linearLayout5"
                 android:id="@+id/linearLayout8"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+>
 
 
                 <TextView
@@ -193,7 +192,7 @@
                     android:textStyle="bold"
                     android:id="@+id/label2"
                     android:paddingTop="10dp"
-                    android:layout_weight="0.166"
+                    android:layout_weight="0.15"
 
                     android:layout_toRightOf="@+id/label1">
                 </TextView>
@@ -243,18 +242,18 @@
                     >
                 </TextView>
 
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:id="@+id/textView15"
+                    android:layout_weight="0.19"/>
 
 
             </LinearLayout>
 
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/linearLayout8"
-                android:id="@+id/linearLayout9">
+
 
                 <ListView
                         android:layout_width="wrap_content"
@@ -262,8 +261,7 @@
                         android:id="@+id/listView"
 
                         android:layout_below="@+id/linearLayout8"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+
                         android:layout_above="@+id/adView"
 
                        />
@@ -276,11 +274,11 @@
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
                     </com.google.android.gms.ads.AdView>
-            </LinearLayout>
+
 
 
         </RelativeLayout>
-    </ScrollView>
+    </custum.VerticalScrollview>
 
 
 </FrameLayout>

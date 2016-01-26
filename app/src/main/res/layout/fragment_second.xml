@@ -6,259 +6,272 @@
     tools:context="com.hosen.khp.mymy.SecondFragment">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <custum.VerticalScrollview
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView4" >
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/linearLayout2">
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/editText2Km"
-                android:layout_weight="1"
-                android:hint="Km" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Km"
-                android:id="@+id/textView"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayout"
-            android:layout_below="@+id/linearLayout2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/editText2Liter"
-                android:layout_weight="1"
-                android:hint="Liter" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Liter"
-                android:id="@+id/textView2"
-                android:layout_weight="1" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout"
-            android:id="@+id/linearLayout6"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_height="match_parent">
 
-            <EditText
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:ems="10"
-                android:id="@+id/editText2Price"
-                android:layout_weight="1"
-                android:hint="Price" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Price"
-                android:id="@+id/textView66"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout6"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="36dp"
-            android:layout_gravity="center"
-            android:id="@+id/linearLayout3">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Calculate"
-                android:id="@+id/button3"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/gloss_button_9_patch"
-                android:layout_weight=".3" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Send to"
-                android:id="@+id/button4"
-                android:background="@drawable/gloss_button_9_patch"
-                android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/linearLayout3"
-                android:layout_alignEnd="@+id/linearLayout3"
-                android:layout_weight=".7" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout3"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="20dp"
-            android:id="@+id/linearLayout4">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Liter per 100 Km:"
-                android:id="@+id/textView3"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView2KM"
-                android:paddingLeft="20dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout4"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="20dp"
-            android:layout_marginTop="78dp"
-            android:id="@+id/bbbb">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mile per Gallon:"
-                android:id="@+id/textView5"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView2MPG"
-                android:paddingLeft="20dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/bbbb"
-            android:id="@+id/linearLayout8"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <TextView
-                android:text="ID"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:id="@+id/label1"
-                android:paddingTop="10dp"
-                android:textStyle="bold"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout2">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/editText2Km"
+                    android:layout_weight="1"
+                    android:hint="Km" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Km"
+                    android:id="@+id/textView"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout"
+                android:layout_below="@+id/linearLayout2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/editText2Liter"
+                    android:layout_weight="1"
+                    android:hint="Liter" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Liter"
+                    android:id="@+id/textView2"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout"
+                android:id="@+id/linearLayout6"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:ems="10"
+                    android:id="@+id/editText2Price"
+                    android:layout_weight="1"
+                    android:hint="Price" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:id="@+id/textView66"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout6"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="36dp"
+                android:layout_gravity="center"
+                android:id="@+id/linearLayout3">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Calculate"
+                    android:id="@+id/button3"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/gloss_button_9_patch"
+                    android:layout_weight=".3" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Send to"
+                    android:id="@+id/button4"
+                    android:background="@drawable/gloss_button_9_patch"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignRight="@+id/linearLayout3"
+                    android:layout_alignEnd="@+id/linearLayout3"
+                    android:layout_weight=".7" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout3"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="20dp"
+                android:id="@+id/linearLayout4">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Liter per 100 Km:"
+                    android:id="@+id/textView3"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2KM"
+                    android:paddingLeft="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout4"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="20dp"
+                android:layout_marginTop="78dp"
+                android:id="@+id/bbbb">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mile per Gallon:"
+                    android:id="@+id/textView5"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView2MPG"
+                    android:paddingLeft="20dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/linearLayout4"
+                android:id="@+id/linearLayout8"
                 >
-            </TextView>
-            <TextView
-                android:text="Date"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:textStyle="bold"
-                android:id="@+id/label2"
-                android:paddingTop="10dp"
-
-                android:layout_toRightOf="@+id/label1">
-            </TextView>
-            <TextView
-                android:text="KM"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:textStyle="bold"
-                android:id="@+id/label3"
-                android:paddingTop="10dp"
-                android:layout_toRightOf="@+id/label2">
-            </TextView>
-            <TextView
-                android:text="Liter"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:paddingTop="10dp"
-                android:id="@+id/label4"
-                android:textStyle="bold"
-                android:layout_toRightOf="@+id/label3" >
-            </TextView>
-            <TextView
-                android:text="Price"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:paddingTop="10dp"
-                android:id="@+id/label5"
-                android:textStyle="bold"
-
-                android:layout_toRightOf="@+id/label4"
-                >
-            </TextView>
-            <TextView
-                android:text="Liter/100KM"
-                android:layout_width="90dp"
-                android:layout_height="match_parent"
-                android:paddingTop="10dp"
-                android:id="@+id/label6"
-                android:textStyle="bold"
-                android:layout_toRightOf="@+id/label5"
-                >
-            </TextView>
 
 
+                <TextView
+                    android:text="Date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:id="@+id/label2"
+                    android:paddingTop="10dp"
+                    android:layout_weight="0.15"
+
+                    android:layout_toRightOf="@+id/label1">
+                </TextView>
+                <TextView
+                    android:text="Km"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:id="@+id/label3"
+                    android:paddingTop="10dp"
+                    android:layout_weight="0.166"
+
+                    android:layout_toRightOf="@+id/label2">
+                </TextView>
+                <TextView
+                    android:text="Litter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:id="@+id/label4"
+                    android:layout_weight="0.166"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/label3" >
+                </TextView>
+                <TextView
+                    android:text="Price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:id="@+id/label5"
+                    android:textStyle="bold"
+                    android:layout_weight="0.166"
+
+                    android:layout_toRightOf="@+id/label4"
+                    >
+                </TextView>
+                <TextView
+                    android:text="Litter/100km"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:id="@+id/label6"
+                    android:textStyle="bold"
+                    android:layout_weight="0.166"
+                    android:layout_toRightOf="@+id/label5"
+
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:id="@+id/textView15"
+                    android:layout_weight="0.19"/>
 
 
-        </LinearLayout>
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView2"
-            android:layout_below="@+id/linearLayout8"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_above="@+id/adView"/>
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
-        </com.google.android.gms.ads.AdView>
-    </RelativeLayout>
+            </LinearLayout>
+
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="300dp"
+                android:id="@+id/listView2"
+                android:layout_below="@+id/linearLayout8"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_above="@+id/adView"/>
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
+            </com.google.android.gms.ads.AdView>
+
+         </RelativeLayout>
+    </custum.VerticalScrollview>
+
+
 </FrameLayout>

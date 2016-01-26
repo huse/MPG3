@@ -2,70 +2,82 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="40dp"
 
     android:descendantFocusability="blocksDescendants" >
 
 
-    <TextView
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:id="@+id/label2"
+            android:layout_weight="0.15"
+
+           >
+        </TextView>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.166"
+            android:id="@+id/label3"
+
+            >
+        </TextView>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.166"
+            android:id="@+id/label4"
+
+           >
+        </TextView>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.166"
+            android:id="@+id/label5"
+
+
+             >
+        </TextView>
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.166"
+            android:id="@+id/label6"
+
+
+            >
+        </TextView>
+
+    <LinearLayout
+        android:orientation="horizontal"
 
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.19">
 
-        android:id="@+id/label2"
-        android:layout_weight="1"
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:visibility="visible"
 
-       >
-    </TextView>
-    <TextView
-
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:id="@+id/label3"
-
-        >
-    </TextView>
-    <TextView
-
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:id="@+id/label4"
-
-       >
-    </TextView>
-    <TextView
-
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:id="@+id/label5"
-
-
-         >
-    </TextView>
-    <TextView
-
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_weight="1"
-        android:id="@+id/label6"
-
-
-        >
-    </TextView>
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:visibility="visible"
-
-        android:layout_weight="1"
-        android:layout_gravity="right">
-    </ImageView>
-
+            >
+        </ImageView>
+    </LinearLayout>
 
 
 </LinearLayout>
