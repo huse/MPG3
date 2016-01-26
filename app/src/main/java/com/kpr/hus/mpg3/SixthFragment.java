@@ -60,7 +60,7 @@ public class SixthFragment extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
+     /*   final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
         // Add listener
         softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
             @Override
@@ -74,7 +74,7 @@ public class SixthFragment extends Fragment {
                 Log.d("hhhhhh", "keyboard Closed");
                 mAdView.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
 /*
         tvMPG = (TextView) rootView.findViewById(R.id.textView3);
         tvKM100 = (TextView) rootView.findViewById(R.id.textView4);

@@ -251,7 +251,7 @@ public class SecondFragment extends Fragment {
             }
 
         });
-        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(v);
+/*        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(v);
         // Add listener
         softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
             @Override
@@ -265,7 +265,7 @@ public class SecondFragment extends Fragment {
                 Log.d("hhhhhh", "keyboard Closed");
                 mAdView.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
 
         return v;
     }

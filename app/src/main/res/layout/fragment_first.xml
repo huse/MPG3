@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="800dp">
+            android:layout_height="700dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -133,7 +133,7 @@
                 android:layout_below="@+id/linearLayout3"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:id="@+id/linearLayout4">
 
                 <TextView
@@ -157,8 +157,8 @@
                 android:layout_below="@+id/linearLayout4"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_margin="20dp"
-                android:layout_marginTop="78dp"
+                android:layout_margin="10dp"
+                android:layout_marginTop="18dp"
                 android:id="@+id/linearLayout5">
 
                 <TextView
@@ -257,13 +257,9 @@
 
                 <ListView
                         android:layout_width="wrap_content"
-                        android:layout_height="300dp"
+                        android:layout_height="250dp"
                         android:id="@+id/listView"
-
                         android:layout_below="@+id/linearLayout8"
-
-                        android:layout_above="@+id/adView"
-
                        />
 
                 <com.google.android.gms.ads.AdView
@@ -274,9 +270,6 @@
                         ads:adSize="BANNER"
                         ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
                     </com.google.android.gms.ads.AdView>
-
-
-
         </RelativeLayout>
     </custum.VerticalScrollview>
 

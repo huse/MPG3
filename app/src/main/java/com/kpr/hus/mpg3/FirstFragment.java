@@ -265,7 +265,7 @@ Log.d("HHHHHHHHHList", list.size()+"");
             }
 
         });
-        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
+       /* final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
         // Add listener
         softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
             @Override
@@ -279,7 +279,7 @@ Log.d("HHHHHHHHHList", list.size()+"");
                 Log.d("hhhhhh", "keyboard Closed");
                 mAdView.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
         // then just handle callbacks
 
         return rootView;

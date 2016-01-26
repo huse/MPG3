@@ -13,7 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="700dp">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -131,7 +131,7 @@
                 android:layout_below="@+id/linearLayout3"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:id="@+id/linearLayout4">
 
                 <TextView
@@ -155,8 +155,8 @@
                 android:layout_below="@+id/linearLayout4"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_margin="20dp"
-                android:layout_marginTop="78dp"
+                android:layout_margin="10dp"
+                android:layout_marginTop="18dp"
                 android:id="@+id/bbbb">
 
                 <TextView
@@ -176,8 +176,8 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/linearLayout4"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bbbb"
                 android:id="@+id/linearLayout8"
                 >
 
@@ -252,24 +252,18 @@
 
             <ListView
                 android:layout_width="wrap_content"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:id="@+id/listView2"
                 android:layout_below="@+id/linearLayout8"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_above="@+id/adView"/>
+                />
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 ads:adSize="BANNER"
                 ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
             </com.google.android.gms.ads.AdView>
-
          </RelativeLayout>
     </custum.VerticalScrollview>
 

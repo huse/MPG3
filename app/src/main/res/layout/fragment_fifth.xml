@@ -4,12 +4,15 @@
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context="com.kpr.hus.mpg3.FifthFragment">
-
+    <custum.VerticalScrollview
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView3" >
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="500dp">
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -281,7 +284,6 @@
             android:id="@+id/adView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             ads:adSize="BANNER"
             ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
@@ -290,4 +292,5 @@
 
 
     </RelativeLayout>
+    </custum.VerticalScrollview>
 </FrameLayout>

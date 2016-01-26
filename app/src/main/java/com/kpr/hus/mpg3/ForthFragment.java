@@ -242,7 +242,7 @@ public class ForthFragment extends Fragment {
                         substitute.setBackgroundColor(0xFFB1B1B1);
                         viewHolder.icon.setVisibility(View.GONE);
                         db4.deleteBook(list.get(poss));
-                        viewHolder.text.setText("");
+                      // viewHolder.text.setText("");
                         viewHolder.text2.setText("Deleted");
                         viewHolder.text3.setText("");
                         viewHolder.text4.setText("");
@@ -259,7 +259,7 @@ public class ForthFragment extends Fragment {
             }
 
         });
-        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
+/*        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
         // Add listener
         softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
             @Override
@@ -273,7 +273,7 @@ public class ForthFragment extends Fragment {
                 Log.d("hhhhhh", "keyboard Closed");
                 mAdView.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
         return rootView;
     }
 

@@ -130,7 +130,7 @@ public class ThirdFragment extends Fragment {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-
+        updateingListView();
         bt3Calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,7 +242,7 @@ public class ThirdFragment extends Fragment {
                         substitute.setBackgroundColor(0xFFB1B1B1);
                         viewHolder.icon.setVisibility(View.GONE);
                         db3.deleteBook(list.get(poss));
-                        viewHolder.text.setText("");
+//                        viewHolder.text.setText("");
                         viewHolder.text2.setText("Deleted");
                         viewHolder.text3.setText("");
                         viewHolder.text4.setText("");
@@ -376,7 +376,7 @@ public class ThirdFragment extends Fragment {
                 return true;
             }
         };*/
-        updateingListView();
+/*        updateingListView();
         final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
         // Add listener
         softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
@@ -391,7 +391,7 @@ public class ThirdFragment extends Fragment {
                 Log.d("hhhhhh", "keyboard Closed");
                 mAdView.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
         return rootView;
     }
 /*    public boolean cyclingButt(View arg1,ViewHolder viewHolder){

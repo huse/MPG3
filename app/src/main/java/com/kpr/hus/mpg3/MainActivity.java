@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startActivity(new Intent(MainActivity.this, ScreenSlideActivity.class));
-        Toast.makeText(this, "Swipe between pages", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Swipe between pages", Toast.LENGTH_SHORT).show();
         Button bt = (Button) findViewById(R.id.button7);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -208,9 +208,9 @@ public class FifthFragment extends Fragment {
 
 
        // Toast.makeText(this, "Converter", Toast.LENGTH_LONG).show();
-        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
+       // final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
         // Add listener
-        softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
+/*        softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
             @Override
             public void onSoftKeyboardOpened(int keyboardHeightInPx) {
                 Log.d("hhhhhh", "keyboard opened");
@@ -222,7 +222,7 @@ public class FifthFragment extends Fragment {
                 Log.d("hhhhhh", "keyboard Closed");
                 mAdView.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
         return rootView;
     }
 
