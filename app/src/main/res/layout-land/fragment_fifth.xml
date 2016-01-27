@@ -286,7 +286,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             ads:adSize="BANNER"
-            android:layout_below="@+id/scrollView"
             ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
         </com.google.android.gms.ads.AdView>
 

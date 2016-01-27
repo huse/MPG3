@@ -1,0 +1,351 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    tools:context="com.hosen.khp.mymy.ThirdFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <custum.VerticalScrollview
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView6" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="700dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_gravity="center"
+                        android:id="@+id/linearLayout2"
+                        android:imeOptions="actionDone"
+
+                        >
+
+
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
+                            android:id="@+id/bbb">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Average Fuel efficiency of your Car"
+                                android:id="@+id/textView2"
+                                android:layout_weight="1"
+                                android:imeOptions="actionDone"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:id="@+id/linearLayout"
+                            android:imeOptions="actionDone">
+
+
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal"
+                                android:ems="10"
+                                android:id="@+id/editText5"
+                                android:layout_weight="1"
+                                android:hint="MpG"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:imeOptions="actionDone"
+                                />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mile per Gallon"
+                                android:id="@+id/textView"
+                                android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
+                                android:imeOptions="actionDone"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linearLayout2"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="20dp"
+                        android:id="@+id/linearLayout3"
+                        android:imeOptions="actionDone">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="How Much Fuel is in your Tank"
+                            android:id="@+id/textView3"
+                            android:imeOptions="actionDone"/>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <EditText
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal"
+                                android:ems="10"
+                                android:id="@+id/editText6"
+                                android:hint="Gallon"
+                                android:layout_gravity="center_vertical"
+                                android:imeOptions="actionDone"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Gallon"
+                                android:id="@+id/textView6"
+                                android:layout_gravity="center_vertical" />
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linearLayout3"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:id="@+id/linearLayout4">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="Calculate"
+                            android:id="@+id/button5"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/gloss_button_9_patch"
+                            android:longClickable="false"
+                            android:imeOptions="actionDone"
+                            android:layout_weight=".3" />
+
+                        <Button
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:text="Send to"
+                                    android:id="@+id/button6"
+                                    android:height="50dp"
+                                    android:background="@drawable/gloss_button_9_patch"
+                                    android:layout_gravity="right"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentEnd="true"
+                            android:layout_weight=".7" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linearLayout4"
+                        android:layout_margin="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/linearLayout5">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="The Distance you can go"
+                                android:id="@+id/textView7" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/linearLayout6"
+                            >
+
+                            <TextView
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:text=""
+
+                                android:id="@+id/textView8" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mile "
+                                android:id="@+id/textView9"
+
+                                android:layout_gravity="center_vertical" />
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/linearLayout6"
+                            android:id="@+id/linearLayout7">
+                            <TextView
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:text=""
+
+                                android:id="@+id/textView10" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Km"
+
+                                android:id="@+id/textView11" />
+
+
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linearLayout5"
+                        android:id="@+id/linearLayout8">
+
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/description"
+                                android:id="@+id/textView12" />
+
+
+
+
+                    </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/linearLayout8"
+                android:id="@+id/linearLayout18"
+                >
+
+
+                <TextView
+                    android:text="Date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:id="@+id/label2"
+                    android:paddingTop="10dp"
+                    android:layout_weight="0.15"
+
+                    android:layout_toRightOf="@+id/label1">
+                </TextView>
+                <TextView
+                    android:text="MPG"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:id="@+id/label3"
+                    android:paddingTop="10dp"
+                    android:layout_weight="0.166"
+
+                    android:layout_toRightOf="@+id/label2">
+                </TextView>
+                <TextView
+                    android:text="Gallon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:id="@+id/label4"
+                    android:layout_weight="0.166"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/label3" >
+                </TextView>
+                <TextView
+                    android:text="Mile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:id="@+id/label5"
+                    android:textStyle="bold"
+                    android:layout_weight="0.166"
+
+                    android:layout_toRightOf="@+id/label4"
+                    >
+                </TextView>
+                <TextView
+                    android:text="Km"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:id="@+id/label6"
+                    android:textStyle="bold"
+                    android:layout_weight="0.166"
+                    android:layout_toRightOf="@+id/label5"
+
+                    >
+                </TextView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text=""
+                    android:id="@+id/textView15"
+                    android:layout_weight="0.19"/>
+
+
+            </LinearLayout>
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:id="@+id/listView3"
+                android:layout_below="@+id/linearLayout18"
+                 />
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
+            </com.google.android.gms.ads.AdView>
+        </RelativeLayout>
+    </custum.VerticalScrollview>
+
+</FrameLayout>
