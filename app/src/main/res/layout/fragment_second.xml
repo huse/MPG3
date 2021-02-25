@@ -256,14 +256,14 @@
                 android:id="@+id/listView2"
                 android:layout_below="@+id/linearLayout8"
                 />
-            <com.google.android.gms.ads.AdView
+<!--            <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 ads:adSize="BANNER"
                 ads:adUnitId="ca-app-pub-6744562395705685/7534033855">
-            </com.google.android.gms.ads.AdView>
+            </com.google.android.gms.ads.AdView>-->
          </RelativeLayout>
     </custum.VerticalScrollview>
 

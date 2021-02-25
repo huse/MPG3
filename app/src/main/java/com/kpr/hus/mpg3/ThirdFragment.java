@@ -1,12 +1,14 @@
 package com.kpr.hus.mpg3;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +20,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,7 +56,7 @@ public class ThirdFragment extends Fragment {
         }
         return result;
     }
-    private AdView mAdView;
+//    private AdView mAdView;
     List<Data> list;
     MySQLiteHelper db3;
     ListView listView;
@@ -126,9 +128,9 @@ public class ThirdFragment extends Fragment {
         tv3Km = (TextView) rootView.findViewById(R.id.textView10);
         db3 = new MySQLiteHelper(getActivity().getBaseContext(),"third");
         listView = (ListView)rootView.findViewById(R.id.listView3);
-        mAdView = (AdView) rootView.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+//        mAdView = (AdView) rootView.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
 
         updateingListView();
         bt3Calculate.setOnClickListener(new View.OnClickListener() {

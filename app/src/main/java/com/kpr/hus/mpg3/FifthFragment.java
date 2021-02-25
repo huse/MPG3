@@ -1,9 +1,8 @@
 package com.kpr.hus.mpg3;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
+//import com.google.android.gms.ads.AdRequest;
+//import com.google.android.gms.ads.AdView;
 
 /**
  * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
@@ -39,7 +38,7 @@ public class FifthFragment extends Fragment {
         }
         return result;
     }
-    private AdView mAdView;
+//    private AdView mAdView;
     Button bt1, bt2,bt3,bt4;
     EditText et1, et2, et3, et4;
     TextView tv1, tv2,tv3,tv4;
@@ -92,9 +91,9 @@ public class FifthFragment extends Fragment {
         tv2 = (TextView) rootView.findViewById(R.id.textView12);
         tv3 = (TextView) rootView.findViewById(R.id.textView13);
         tv4 = (TextView) rootView.findViewById(R.id.textView14);
-        mAdView = (AdView) rootView.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+//        mAdView = (AdView) rootView.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
 
 
         bt1.setOnClickListener(new View.OnClickListener() {

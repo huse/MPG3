@@ -1,7 +1,7 @@
 package CustomListView;
 
-import android.app.Activity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,7 +11,7 @@ import com.kpr.hus.mpg3.R;
 /**
  * Created by f1 on 1/4/2016.
  */
-public class SwipingActivity extends Activity {
+public class SwipingActivity extends AppCompatActivity {
 
     public View.OnTouchListener gestureListener;
     @Override

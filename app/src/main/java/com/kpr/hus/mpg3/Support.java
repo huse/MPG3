@@ -3,7 +3,7 @@ package com.kpr.hus.mpg3;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
-import android.support.v4.view.PagerTitleStrip;
+import androidx.viewpager.widget.PagerTitleStrip;
 import android.view.View;
 
 /**

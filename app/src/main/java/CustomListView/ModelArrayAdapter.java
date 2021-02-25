@@ -1,6 +1,8 @@
 package CustomListView;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,15 +23,15 @@ import CustomListView.SwipingActivity.ViewHolder;
 public class ModelArrayAdapter extends ArrayAdapter<Model>
 {
     private ArrayList<Model> allModelItemsArray;
-    private Activity context;
+    private AppCompatActivity context;
     private LayoutInflater inflator;
     private View.OnTouchListener listener;
 
 
-    public ModelArrayAdapter(Activity context, ArrayList<Model> list,View.OnTouchListener _listener) {
+    public ModelArrayAdapter(FragmentActivity context, ArrayList<Model> list, View.OnTouchListener _listener) {
         super(context, R.layout.list_row, list);
         this.listener = _listener;
-        this.context = context;
+//        this.context = context;
         this.allModelItemsArray = new ArrayList<Model>();
 
         this.allModelItemsArray.addAll(list);
