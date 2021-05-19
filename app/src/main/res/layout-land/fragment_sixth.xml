@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    tools:context="com.kpr.hus.mpg3.SixthFragment"
+    tools:context="com.kpr.hus.mpg4.SixthFragment"
     android:padding="3dp">
 
     <custum.VerticalScrollview
@@ -90,19 +90,7 @@
                      />
             </ScrollView>
 
-
         </LinearLayout>
-<!--        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-6744562395705685/7534033855"
-            android:layout_below="@+id/linearLayout78"
-
-
-            >
-        </com.google.android.gms.ads.AdView>-->
     </RelativeLayout>
 
 

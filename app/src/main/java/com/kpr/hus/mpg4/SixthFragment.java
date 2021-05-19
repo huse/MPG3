@@ -1,4 +1,4 @@
-package com.kpr.hus.mpg3;
+package com.kpr.hus.mpg4;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,8 +10,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-//import com.google.android.gms.ads.AdRequest;
-//import com.google.android.gms.ads.AdView;
+
 
 /**
  * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating

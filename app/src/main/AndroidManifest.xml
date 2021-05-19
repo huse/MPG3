@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kpr.hus.mpg3" >
+    package="com.kpr.hus.mpg4" >
 
     <application
         android:allowBackup="true"
@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme"
 
         >
-        <activity android:name=".MainActivity"
+        <activity android:name="com.kpr.hus.mpg4.MainActivity"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,20 +19,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ScreenSlideActivity"
+            android:name="com.kpr.hus.mpg4.ScreenSlideActivity"
             android:label="@string/title_screen_slide"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.kpr.hus.mpg4.MainActivity"
             android:uiOptions="splitActionBarWhenNarrow" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.kpr.hus.mpg4.MainActivity" />
         </activity>
 
-        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
-        <!-- own AdMob app ID: ca-app-pub-6744562395705685/5021519453 -->
-<!--        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="a-app-pub-3940256099942544~3347511713"/>-->
 
 
     </application>

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
     defaultConfig {
-        applicationId "com.kpr.hus.mpg3"
+        applicationId "com.kpr.hus.mpg4"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 3
@@ -27,9 +27,5 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-/*    implementation 'com.google.android.gms:play-services:12.0.1'
-    implementation 'com.google.android.gms:play-services-ads:19.7.0'
-    implementation 'com.google.android.gms:play-services-identity:17.0.0'
-    implementation 'com.google.android.gms:play-services-gcm:17.0.0'*/
     implementation 'com.android.support:multidex:1.0.3'
 }

@@ -1,4 +1,4 @@
-package com.kpr.hus.mpg3;
+package com.kpr.hus.mpg4;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,8 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-//import com.google.android.gms.ads.AdRequest;
-//import com.google.android.gms.ads.AdView;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,19 +29,11 @@ import CustomListView.Model;
 import CustomListView.ModelArrayAdapter;
 import CustomListView.SwipingActivity;
 
-/**
- * A fragment representing a single step in a wizard. The fragment shows a dummy title indicating
- * the page number, along with some dummy text.
- *
- * <p>This class is used by the {@link CardFlipActivity} and {@link
- * ScreenSlideActivity} samples.</p>
- */
-public class ForthFragment extends Fragment {
+
+public class SecondFragment extends Fragment {
     private SwipingActivity.ViewHolder viewHolder2;
     private View view2;
-    /**
-     * The argument key for the page number this fragment represents.
-     */
+
     double truncateDouble(double number, int numDigits) {
         double result = number;
         String arg = "" + number;
@@ -56,22 +46,16 @@ public class ForthFragment extends Fragment {
         }
         return result;
     }
-    public void implicitSendText(View v){
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, "Message");
-        intent.setType("text/plain");
-        startActivity(intent);
-    }
 //    private AdView mAdView;
     List<Data> list;
-    MySQLiteHelper db4;
+    MySQLiteHelper db2;
     ListView listView;
-    ModelArrayAdapter adapter;
     View.OnTouchListener gestureListener;
-    Button bt4Calculate, bt4Send;
-    EditText et4km100, et4Liter;
-    TextView tv4Km, tv4Mile;
+    ModelArrayAdapter adapter;
+
+    Button bt2Calculate, bt2Send;
+    EditText et1, et2, etKM, etLiter,et2Price;
+    TextView tvKM100, tvMPG;
     String a, b, c, d;
 
     public void sets(String a, String b, String c, String d) {
@@ -82,93 +66,100 @@ public class ForthFragment extends Fragment {
     }
 
     public String gets() {
-        return "Distance you can go by your fuel:" +
-                "" +
-                "" +
-                " " +"Liter per 100Km = " + et4km100.getText() + "   Fuel in your tank, Liter = " + et4Liter.getText() + "    The Distance you can go - in Km = "
-                + tv4Km.getText() + "    The Distance you can go - in Mile = " + tv4Mile.getText();
+        return "Km = " + etKM.getText() + "   Liter = " + etLiter.getText() + "    Liter per 100 Km = "
+                + tvKM100.getText() + "    Mile per Gallon = " + tvMPG.getText()+ "    Price = " +et2Price.getText();
     }
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
     public static final String ARG_PAGE = "page";
 
     /**
      * The fragment's page number, which is set to the argument value for {@link #ARG_PAGE}.
      */
     private int mPageNumber;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
-    /**
-     * Factory method for this fragment class. Constructs a new fragment for the given page number.
-     */
-    public static ForthFragment newInstance(int pageNumber) {
-        ForthFragment fragment = new ForthFragment();
+
+    // TODO: Rename and change types and number of parameters
+    public static SecondFragment newInstance(int pageNumber) {
+        SecondFragment fragment = new SecondFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, pageNumber);
+        args.putInt(ARG_PAGE, 5);
         fragment.setArguments(args);
+
         return fragment;
     }
 
-    public ForthFragment() {
+    public SecondFragment() {
+        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPageNumber = getArguments().getInt(ARG_PAGE);
+/*        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }*/
     }
-    // Button bt1Calculate = new View.findViewById(R.id.button);
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout containing a title and body text.
-        ViewGroup rootView = (ViewGroup) inflater
-                .inflate(R.layout.fragment_forth, container, false);
-        Support.colorBackChange(rootView,0,150,150,255,155,150,150,255);
-       // getActionBar().setDisplayHomeAsUpEnabled(true);
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_second, container, false);
+        Support.colorBackChange(v,0,255,55,255,155,155,200,255);
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        bt4Calculate = (Button) rootView.findViewById(R.id.button5);
-        bt4Send = (Button) rootView.findViewById(R.id.button6);
-        et4km100 = (EditText) rootView.findViewById(R.id.editText5);
-        et4Liter = (EditText) rootView.findViewById(R.id.editText6);
-        tv4Km  = (TextView) rootView.findViewById(R.id.textView8);
-        tv4Mile = (TextView) rootView.findViewById(R.id.textView10);
-        db4 = new MySQLiteHelper(getActivity().getBaseContext(),"forth");
-        listView = (ListView)rootView.findViewById(R.id.listView4);
-//        mAdView = (AdView) rootView.findViewById(R.id.adView);
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        mAdView.loadAd(adRequest);
+        bt2Calculate = (Button) v.findViewById(R.id.button3);
+        bt2Send = (Button) v.findViewById(R.id.button4);
+        etKM = (EditText) v.findViewById(R.id.editText2Km);
+        etLiter = (EditText) v.findViewById(R.id.editText2Liter);
+        et2Price = (EditText) v.findViewById(R.id.editText2Price);
+        tvKM100 = (TextView) v.findViewById(R.id.textView2KM);
+        tvMPG = (TextView) v.findViewById(R.id.textView2MPG);
+        db2 = new MySQLiteHelper(getActivity().getBaseContext(),"second");
 
+        listView = (ListView)v.findViewById(R.id.listView2);
+ //       mAdView = (AdView) v.findViewById(R.id.adView);
+ //       AdRequest adRequest = new AdRequest.Builder().build();
+ //       mAdView.loadAd(adRequest);
         updateingListView();
 
-
-        bt4Calculate.setOnClickListener(new View.OnClickListener() {
+        bt2Calculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
                     Support.colorChange(v, "BLUE", "RED");
-                    Double dd1 = Double.parseDouble(et4km100.getText().toString());
-                    Double dd2 = Double.parseDouble(et4Liter.getText().toString());
+                    Double dd1 = Double.parseDouble(etKM.getText().toString());
+                    Double dd2 = Double.parseDouble(etLiter.getText().toString());
                     Double dd;
-                    dd = (dd2 * 100) / dd1;
+                    dd = (dd2 / dd1) * 100;
                     Double ff = truncateDouble(dd, 2);
                     String ss;
                     ss = ff.toString();
-                    tv4Km.setText(ss + " ");
+                    tvKM100.setText(ss);
 
-                    //Double dk1 = dd1 / 1.609344;
-                    //Double dk2 = dd2 / 3.785411784;
-                    Double dkk = dd / 1.609344;
+                    Double dk1 = dd1 / 1.609344;
+                    Double dk2 = dd2 / 3.785411784;
+                    Double dkk = dk1 / dk2;
                     Double ff2 = truncateDouble(dkk, 2);
                     String sk = ff2.toString();
-                    tv4Mile.setText(sk + " ");
-                    sets(et4km100.getText().toString(), et4Liter.getText().toString(),
+                    tvMPG.setText(sk);
+                    sets(etKM.getText().toString(), etLiter.getText().toString(),
                             ss, sk);
                     InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    mgr.hideSoftInputFromWindow(et4Liter.getWindowToken(), 0);
-                    mgr.hideSoftInputFromWindow(et4km100.getWindowToken(), 0);
+                    mgr.hideSoftInputFromWindow(etLiter.getWindowToken(), 0);
+                    mgr.hideSoftInputFromWindow(etKM.getWindowToken(), 0);
 
                 } catch (Exception e) {
-                    tv4Mile.setText("invalid");
-                    tv4Km.setText("invalid");
+                    tvMPG.setText("invalid");
+                    tvKM100.setText("invalid");
 
                 }
                 Calendar c = Calendar.getInstance();
@@ -176,15 +167,14 @@ public class ForthFragment extends Fragment {
                 int month = c.get(Calendar.MONTH) + 1;
                 int year = c.get(Calendar.YEAR);
 
-                db4.addBook(new Data(month + "/" + day + "/" + year, et4km100.getText().toString(), et4Liter.getText().toString(), tv4Km.getText().toString(), tv4Mile.getText().toString()));
+                db2.addBook(new Data(month + "/" + day + "/" + year, etKM.getText().toString(), etLiter.getText().toString(), et2Price.getText().toString(), tvKM100.getText().toString()));
 
                 updateingListView();
             }
         });
 
 
-
-        bt4Send.setOnClickListener(new View.OnClickListener() {
+        bt2Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Support.colorChange(v, "BLUE", "RED");
@@ -197,7 +187,7 @@ public class ForthFragment extends Fragment {
 
 
         });
-       // Toast.makeText(this, "Calculation Distance Metric", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "Fuel efficiency Metric", Toast.LENGTH_SHORT).show();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
@@ -243,8 +233,8 @@ public class ForthFragment extends Fragment {
 
                         substitute.setBackgroundColor(0xFFB1B1B1);
                         viewHolder.icon.setVisibility(View.GONE);
-                        db4.deleteBook(list.get(poss));
-                      // viewHolder.text.setText("");
+                        db2.deleteBook(list.get(poss));
+                      //  viewHolder.text.setText("");
                         viewHolder.text2.setText("Deleted");
                         viewHolder.text3.setText("");
                         viewHolder.text4.setText("");
@@ -261,7 +251,7 @@ public class ForthFragment extends Fragment {
             }
 
         });
-/*        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
+/*        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(v);
         // Add listener
         softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
             @Override
@@ -276,18 +266,12 @@ public class ForthFragment extends Fragment {
                 mAdView.setVisibility(View.VISIBLE);
             }
         });*/
-        return rootView;
-    }
 
-    /**
-     * Returns the page number represented by this fragment object.
-     */
-    public int getPageNumber() {
-        return mPageNumber;
+        return v;
     }
     public ArrayList<Model> getData()
     {
-        list = db4.getAllBooks();
+        list = db2.getAllBooks();
 
         ArrayList<Model> models = new ArrayList();
 
@@ -309,5 +293,7 @@ public class ForthFragment extends Fragment {
         // check if the adapter has changed
         adapter.notifyDataSetChanged();
     }
+
+
 
 }

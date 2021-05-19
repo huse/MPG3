@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.kpr.hus.mpg3.R;
+import com.kpr.hus.mpg4.R;
 
 /**
  * Created by f1 on 1/4/2016.

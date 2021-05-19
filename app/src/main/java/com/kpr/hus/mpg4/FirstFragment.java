@@ -1,4 +1,4 @@
-package com.kpr.hus.mpg3;
+package com.kpr.hus.mpg4;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-//import com.google.android.gms.ads.AdRequest;
-//import com.google.android.gms.ads.AdView;
+
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,11 +29,9 @@ import java.util.List;
 import CustomListView.Model;
 import CustomListView.ModelArrayAdapter;
 import CustomListView.SwipingActivity;
+//dESIGNED BY hOSEIN kAJEPOR
 
-
-public class SecondFragment extends Fragment {
-    private SwipingActivity.ViewHolder viewHolder2;
-    private View view2;
+public class FirstFragment extends Fragment {
 
     double truncateDouble(double number, int numDigits) {
         double result = number;
@@ -48,17 +45,28 @@ public class SecondFragment extends Fragment {
         }
         return result;
     }
+    public void implicitSendText(View v){
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, "Message");
+        intent.setType("text/plain");
+        startActivity(intent);
+    }
 //    private AdView mAdView;
     List<Data> list;
-    MySQLiteHelper db2;
+    MySQLiteHelper db1;
     ListView listView;
-    View.OnTouchListener gestureListener;
     ModelArrayAdapter adapter;
-
-    Button bt2Calculate, bt2Send;
-    EditText et1, et2, etKM, etLiter,et2Price;
-    TextView tvKM100, tvMPG;
+    View.OnTouchListener gestureListener;
+    Button bt1Calculate, bt2Send,bt7;
+    EditText et1, etPrice, etMile, etGallon;
+    TextView tvMPG, tvKM100;
     String a, b, c, d;
+    SwipingActivity.ViewHolder viewHolder2;
+    View view2;
+    float historicX = Float.NaN, historicY = Float.NaN;
+    static final int DELTA = 50;
+    enum Direction {LEFT, RIGHT;}
 
     public void sets(String a, String b, String c, String d) {
         this.a = a;
@@ -68,8 +76,11 @@ public class SecondFragment extends Fragment {
     }
 
     public String gets() {
-        return "Km = " + etKM.getText() + "   Liter = " + etLiter.getText() + "    Liter per 100 Km = "
-                + tvKM100.getText() + "    Mile per Gallon = " + tvMPG.getText()+ "    Price = " +et2Price.getText();
+Log.d("HHHHHHHHHList", list.size()+"");
+        Log.d("HHHHHHHHHListView", listView.getId()+"");
+       // return db1.getData(87).toString();
+        return "Mile = " + etMile.getText() + "   Gallon = " + etGallon.getText() + "    Mile per Gallon = "
+                + tvMPG.getText() + "    Liter per 100 Km = " + tvKM100.getText()+ "    Price = " +etPrice.getText();
     }
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,16 +97,15 @@ public class SecondFragment extends Fragment {
 
 
     // TODO: Rename and change types and number of parameters
-    public static SecondFragment newInstance(int pageNumber) {
-        SecondFragment fragment = new SecondFragment();
+    public static FirstFragment newInstance(int pageNumber) {
+        FirstFragment fragment = new FirstFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, 5);
+        args.putInt(ARG_PAGE, pageNumber);
         fragment.setArguments(args);
-
         return fragment;
     }
 
-    public SecondFragment() {
+    public FirstFragment() {
         // Required empty public constructor
     }
 
@@ -103,79 +113,79 @@ public class SecondFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPageNumber = getArguments().getInt(ARG_PAGE);
-/*        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_second, container, false);
-        Support.colorBackChange(v,0,255,55,255,155,155,200,255);
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        bt2Calculate = (Button) v.findViewById(R.id.button3);
-        bt2Send = (Button) v.findViewById(R.id.button4);
-        etKM = (EditText) v.findViewById(R.id.editText2Km);
-        etLiter = (EditText) v.findViewById(R.id.editText2Liter);
-        et2Price = (EditText) v.findViewById(R.id.editText2Price);
-        tvKM100 = (TextView) v.findViewById(R.id.textView2KM);
-        tvMPG = (TextView) v.findViewById(R.id.textView2MPG);
-        db2 = new MySQLiteHelper(getActivity().getBaseContext(),"second");
+       final View rootView = inflater.inflate(R.layout.fragment_first, container, false);
 
-        listView = (ListView)v.findViewById(R.id.listView2);
- //       mAdView = (AdView) v.findViewById(R.id.adView);
- //       AdRequest adRequest = new AdRequest.Builder().build();
- //       mAdView.loadAd(adRequest);
+       // v.setBackgroundColor(Color.BLACK);
+//        View root = v.getRootView();
+//        root.setBackgroundColor(Color.argb(155,55,255,255));
+        Support.colorBackChange(rootView,0,55,255,255,155,55,255,255);
+        bt1Calculate = (Button) rootView.findViewById(R.id.button3);
+        bt2Send = (Button) rootView.findViewById(R.id.button4);
+
+        etMile = (EditText) rootView.findViewById(R.id.editText);
+        etGallon = (EditText) rootView.findViewById(R.id.editText2);
+        etPrice = (EditText) rootView.findViewById(R.id.editText6);
+        tvMPG = (TextView) rootView.findViewById(R.id.textView4);
+        tvKM100 = (TextView) rootView.findViewById(R.id.textView6);
+        db1 = new MySQLiteHelper(getActivity().getBaseContext(),"first");
+        listView = (ListView)rootView.findViewById(R.id.listView);
+//        mAdView = (AdView) rootView.findViewById(R.id.adView);
+//        AdRequest adRequest = new AdRequest.Builder().build();
+//        mAdView.loadAd(adRequest);
+
         updateingListView();
 
-        bt2Calculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+       bt1Calculate.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Support.colorChange(v, "BLUE", "RED");
+               try {
+                   Double dd1 = Double.parseDouble(etMile.getText().toString());
+                   Double dd2 = Double.parseDouble(etGallon.getText().toString());
+                   Double dd;
+                   dd = dd1 / dd2;
+                   Double ff = truncateDouble(dd, 2);
+                   String ss;
+                   ss = ff.toString();
+                   tvMPG.setText(ss);
 
-                try {
-                    Support.colorChange(v, "BLUE", "RED");
-                    Double dd1 = Double.parseDouble(etKM.getText().toString());
-                    Double dd2 = Double.parseDouble(etLiter.getText().toString());
-                    Double dd;
-                    dd = (dd2 / dd1) * 100;
-                    Double ff = truncateDouble(dd, 2);
-                    String ss;
-                    ss = ff.toString();
-                    tvKM100.setText(ss);
+                   Double dk1 = dd1 * 1.609344;
+                   Double dk2 = dd2 * 3.785411784;
+                   Double dkk = (100.0 * dk2) / dk1;
+                   Double ff2 = truncateDouble(dkk, 2);
+                   String sk = ff2.toString();
+                   tvKM100.setText(sk);
+                   sets(etMile.getText().toString(), etGallon.getText().toString(),
+                           ss, sk);
+                   InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                   mgr.hideSoftInputFromWindow(etGallon.getWindowToken(), 0);
+                   mgr.hideSoftInputFromWindow(etMile.getWindowToken(), 0);
 
-                    Double dk1 = dd1 / 1.609344;
-                    Double dk2 = dd2 / 3.785411784;
-                    Double dkk = dk1 / dk2;
-                    Double ff2 = truncateDouble(dkk, 2);
-                    String sk = ff2.toString();
-                    tvMPG.setText(sk);
-                    sets(etKM.getText().toString(), etLiter.getText().toString(),
-                            ss, sk);
-                    InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    mgr.hideSoftInputFromWindow(etLiter.getWindowToken(), 0);
-                    mgr.hideSoftInputFromWindow(etKM.getWindowToken(), 0);
+               } catch (Exception e) {
+                   tvKM100.setText("invalid");
+                   tvMPG.setText("invalid");
 
-                } catch (Exception e) {
-                    tvMPG.setText("invalid");
-                    tvKM100.setText("invalid");
+               }
+               Calendar c = Calendar.getInstance();
+               int day = c.get(Calendar.DAY_OF_MONTH);
+               int month = c.get(Calendar.MONTH) + 1;
+               int year = c.get(Calendar.YEAR);
 
-                }
-                Calendar c = Calendar.getInstance();
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                int month = c.get(Calendar.MONTH) + 1;
-                int year = c.get(Calendar.YEAR);
+               db1.addBook(new Data(month + "/" + day + "/" + year, etMile.getText().toString(), etGallon.getText().toString(), etPrice.getText().toString(), tvMPG.getText().toString()));
 
-                db2.addBook(new Data(month + "/" + day + "/" + year, etKM.getText().toString(), etLiter.getText().toString(), et2Price.getText().toString(), tvKM100.getText().toString()));
+               updateingListView();
 
-                updateingListView();
-            }
-        });
-
-
+           }
+       });
         bt2Send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,7 +199,7 @@ public class SecondFragment extends Fragment {
 
 
         });
-        //Toast.makeText(this, "Fuel efficiency Metric", Toast.LENGTH_SHORT).show();
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
@@ -201,7 +211,7 @@ public class SecondFragment extends Fragment {
                     viewHolder2.icon.setVisibility(View.GONE);
                     Log.d("Deselected", viewHolder2.position + "");
                 }
-
+                rootView.getParent().requestDisallowInterceptTouchEvent(true);
                 final SwipingActivity.ViewHolder viewHolder;
                 view2 = arg1;
                 viewHolder2 = ((SwipingActivity.ViewHolder) arg1.getTag());
@@ -215,19 +225,21 @@ public class SecondFragment extends Fragment {
                 final View substitute;
                 substitute = arg1;
 
-                if (color != 0xFFFF5556) {
+                if (color != Color.argb(200, 255, 76, 54)) {
 
 
                     Support.colorBackChange2(arg1, 200, 0, 144, 250, 200, 255, 76, 54);
-                    //arg1.setBackgroundColor(0xFFFF5556);
+                    // arg1.setBackgroundColor(Color.argb( 200, 255, 76, 54));
                     viewHolder.icon.setImageResource(R.drawable.recycle_512);
                     viewHolder.icon.setVisibility(View.VISIBLE);
                     Log.d("Selected", viewHolder.position + "");
                 } else {
+
                     arg1.setBackgroundColor(listView.getSolidColor());
                     viewHolder.icon.setVisibility(View.GONE);
                     Log.d("Deselected", viewHolder.position + "");
                 }
+                //delete icon listener
                 final int poss = pos;
                 viewHolder.icon.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -235,8 +247,8 @@ public class SecondFragment extends Fragment {
 
                         substitute.setBackgroundColor(0xFFB1B1B1);
                         viewHolder.icon.setVisibility(View.GONE);
-                        db2.deleteBook(list.get(poss));
-                      //  viewHolder.text.setText("");
+                        db1.deleteBook(list.get(poss));
+//                        viewHolder.text.setText("");
                         viewHolder.text2.setText("Deleted");
                         viewHolder.text3.setText("");
                         viewHolder.text4.setText("");
@@ -245,6 +257,7 @@ public class SecondFragment extends Fragment {
                         Log.d("List", list.get(poss) + "");
                         Log.d("positon", poss + "");
                         updateingListView();
+
                     }
 
 
@@ -253,7 +266,7 @@ public class SecondFragment extends Fragment {
             }
 
         });
-/*        final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(v);
+       /* final SoftKeyboardStateWatcher softKeyboardStateWatcher = new SoftKeyboardStateWatcher(rootView);
         // Add listener
         softKeyboardStateWatcher.addSoftKeyboardStateListener(new SoftKeyboardStateWatcher.SoftKeyboardStateListener() {
             @Override
@@ -268,12 +281,26 @@ public class SecondFragment extends Fragment {
                 mAdView.setVisibility(View.VISIBLE);
             }
         });*/
+        // then just handle callbacks
 
-        return v;
+        return rootView;
     }
+
+    private void FunctionDeleteRowWhenSlidingRight(int pos) {
+        db1.deleteBook(list.get(pos));
+        updateingListView();
+    }
+
+    private void FunctionDeleteRowWhenSlidingLeft(int pos) {
+
+        db1.deleteBook(list.get(pos));
+        updateingListView();
+
+    }
+
     public ArrayList<Model> getData()
     {
-        list = db2.getAllBooks();
+        list = db1.getAllBooks();
 
         ArrayList<Model> models = new ArrayList();
 
@@ -295,7 +322,5 @@ public class SecondFragment extends Fragment {
         // check if the adapter has changed
         adapter.notifyDataSetChanged();
     }
-
-
 
 }

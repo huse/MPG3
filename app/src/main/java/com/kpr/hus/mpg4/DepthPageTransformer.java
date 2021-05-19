@@ -1,4 +1,4 @@
-package com.kpr.hus.mpg3;
+package com.kpr.hus.mpg4;
 
 import androidx.viewpager.widget.ViewPager;
 import android.view.View;
